@@ -8,15 +8,15 @@
 }
 
 :root{
-    --black: #000;
-    --white: #fef4f4;
-    --darkblue: #182848;
-    --lightblue: #4b6cb7;
+    --black: #0e0e0e;
+    --white: #f4f4f4;
+    --lightgreen: #5B8C5A;
+    --darkgreen: #596157;
     --myfont: 'Carrois Gothic SC', Helvetica, Arial, sans-serif;
 }
 
 body{
-    background: linear-gradient(to right,var(--darkblue),var(--lightblue));
+    background: linear-gradient(to right,var(--lightgreen),var(--darkgreen));
 }
 
 h1, p, a {

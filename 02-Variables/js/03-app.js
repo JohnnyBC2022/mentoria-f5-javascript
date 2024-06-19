@@ -1,6 +1,8 @@
-const producto = "Manzanas";
-const producto2 = "Peras";
+const PI = 3.1416;
+const NOMBRE_USUARIO = "Paola";
 const producto3 = "Fresas";
+
+
 
 
 

@@ -1,0 +1,41 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+    outline: none;
+}
+
+:root{
+    --black: #000;
+    --white: #fef4f4;
+    --darkblue: #182848;
+    --lightblue: #4b6cb7;
+    --myfont: 'Carrois Gothic SC', Helvetica, Arial, sans-serif;
+}
+
+body{
+    background: linear-gradient(to right,var(--darkblue),var(--lightblue));
+}
+
+h1, p, a {
+    font-family: 'Carrois Gothic SC', sans-serif;
+    display: block;
+    text-align: center;
+    line-height:.8;
+    color: var(--white);
+}
+.contenido {
+    max-width: 1200px;
+    margin: 5rem auto 0 auto;
+    color:var(--white);
+    font-size: 3rem;
+    font-family: 'Carrois Gothic SC', sans-serif;
+}
+h1 {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+}
+
+

@@ -3,7 +3,7 @@
 const producto = '                         Monitor 20 "        ';
 
 console.log(producto);
-console.log(producto.length);
+console.log(producto.length); 
 
 // Eliminar espacios en blanco del inicio
 console.log(producto.trimStart());

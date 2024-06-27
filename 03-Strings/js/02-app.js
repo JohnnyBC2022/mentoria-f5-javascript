@@ -8,8 +8,8 @@ console.log(producto.length);
 console.log(producto.indexOf('Monitor'));
 
 // otro método para saber si una palabra está incluida en el string
-console.log(producto.includes('Monitor'));
-console.log(producto.includes('monitor'));
-console.log(producto.includes('tablet'));
+console.log(producto.includes('Monitor')); // true
+console.log(producto.includes('monitor')); // false
+console.log(producto.includes('tablet')); // false
 
 

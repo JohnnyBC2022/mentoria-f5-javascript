@@ -35,7 +35,7 @@ resultado = Math.max(3, 1, 12, -4,6 )
 resultado = Math.random() // devuelve un valor aleatorio entre 0 y 1
 
 //Aleatorio dentro de un rango
-resultado = Math.floor(Math.random() * 255);
+resultado = Math.floor(Math.random() * 256);
 
 
 

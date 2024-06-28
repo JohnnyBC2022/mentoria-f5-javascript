@@ -5,7 +5,7 @@
 
 **Descripción:** Dado un string, conviértelo a mayúsculas.
 
-```
+```javascript
 const texto = "hola mundo";
 ```
 
@@ -14,7 +14,7 @@ const texto = "hola mundo";
 
 **Descripción:** Dado un string , extrae la subcadena `Javascript`.
 
-```
+```javascript
 const texto = "Estoy aprendiendo Javascript";
 ```
 
@@ -22,7 +22,7 @@ const texto = "Estoy aprendiendo Javascript";
 
 **Descripción:** Dado un string, reemplaza la palabra `Python` por `Javascript`.
 
-```
+```javascript
 const texto = "Estoy aprendiendo Python";
 ```
 
@@ -30,7 +30,7 @@ const texto = "Estoy aprendiendo Python";
 
 **Descripción:** Dado un string, separa cada uno de los elementos que lo contienen.
 
-```
+```javascript
 const colores = "rojo, verde, azul, amarillo, naranja"
 ```
 
@@ -38,7 +38,7 @@ const colores = "rojo, verde, azul, amarillo, naranja"
 
 **Descripción:** Dado un string, elimina los espacios en blanco al principio y final del texto utilizando dos métodos distintos.
 
-```
+```javascript
 const texto = "              Hola, mundo.            ";"
 ```
 

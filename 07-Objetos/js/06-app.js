@@ -1,7 +1,7 @@
 // Desestructuración en objetos anidados
 
 const producto = {
-    nombre: "Monitor 20 pulgadas",
+    nombre: "Monitor 24 pulgadas",
     precio: 300,
     disponible: true,
     informacion: {
@@ -10,7 +10,7 @@ const producto = {
             medida: '50cm'
         },
         fabricacion: {
-            pais: 'China'
+            pais: 'España'
         }
     }
 }

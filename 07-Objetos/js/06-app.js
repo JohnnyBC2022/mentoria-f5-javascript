@@ -17,7 +17,7 @@ const producto = {
 
 
 // Esta sintaxis puede ser compleja, pero si la entendemos, hace más legible el código para cualquier persona que lo lea
-const { nombre, informacion ,informacion: {caracteristicas, caracteristicas: {peso}} } = producto;
+const { nombre, informacion , informacion: {caracteristicas, caracteristicas: {peso}} } = producto;
 
 console.log(nombre);
 console.log(informacion);

@@ -6,16 +6,18 @@ const producto = {
     disponible: true
 }
 
+console.table(producto);
 const caracteristicas = {
     peso: '1kg',
     medida: '50cm'
 }
+console.table(caracteristicas);
 
 const resultado = Object.assign(producto, caracteristicas)
 
-console.log(resultado);
+console.table(resultado);
 
 //Spread operator o Rest Operator (muy utilizado)
 
-const resultado2 = {...producto, ...medidas} //es como si le dijeramos con "..." copia y asignalo dentro del objeto
+const resultado2 = {...producto, ...caracteristicas} //es como si le dijeramos con "..." copia y asignalo dentro del objeto
 console.log(resultado2);

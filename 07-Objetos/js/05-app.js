@@ -16,4 +16,4 @@ const producto = {
 }
 
 console.log(producto);
-console.log(producto.informacion.fabricacion.pais);
+console.log(producto.informacion.características.peso);

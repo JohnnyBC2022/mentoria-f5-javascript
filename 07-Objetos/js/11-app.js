@@ -1,5 +1,5 @@
-/* const nombre = 'Hola';
-const precio = 20;
+/* const nombre= "Hola"
+const precio = 20; 
 const producto = {
     nombre: "Monitor 20 pulgadas",
     precio: 300,

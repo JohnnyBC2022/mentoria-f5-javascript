@@ -15,3 +15,4 @@ console.log(numero5);
 // otra alternativa (poco usada y conocida)
 const numero6 = new Number(80);
 console.log(numero6);
+

@@ -28,7 +28,7 @@ console.log(cuarto)
 
 // ¿si queremos los tres elementos finales?
 // Esta sintaxis es muy común en React
-const[ , ,...quinto] =numeros;
+const[ , ,...quinto] = numeros;
 console.log(quinto);
 
 // Tenemos que tener en cuenta la posicion del array

@@ -19,6 +19,7 @@ const nuevoArray2 = carrito.map(function (producto) {
     return`${producto.nombre} - Precio: ${producto.precio}`;
 })
 
+
 console.log(nuevoArray);
 console.log(nuevoArray2);
 

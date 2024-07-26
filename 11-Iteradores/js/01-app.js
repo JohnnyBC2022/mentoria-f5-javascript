@@ -1,3 +1,23 @@
+// Bucle for: recorre todos los elementos mientras se cumpla una condición.
+
+// Se utiliza cuando se conoce de antemano el número de veces que se desea repetir un bloque de código.
+
+// La inicialización, condición, y actualización están en una sola línea.
+
+// for(inicializador; condición; incremento) { instrucciones a ejecutar}
+/*
+for (let i = 0; i < 10; i++) {
+    console.log(`Numero: ${i}`)
+} */
+
+/* for (let i = 1; i <= 20; i++) {
+    if (i % 2 == 0) {
+        console.log(`El número ${i} es PAR`)
+    } else {
+        console.log(`El número ${i} es IMPAR`)
+    }
+} */
+
 const carrito = [
     { nombre: 'Monitor 27 pulgadas', precio: 500 },
     { nombre: 'Televisión', precio: 200 },

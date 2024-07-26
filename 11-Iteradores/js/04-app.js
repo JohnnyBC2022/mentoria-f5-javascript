@@ -1,15 +1,27 @@
-// KATA: Fizz Buzz. Cada vez que haya un múltiplo de 3 debe imprimir Fizz. Cada vez que haya un múltiplo de 5, debe imprimir Buzz y cada vez que sea múltiplo de 3 y 5, debe imprimir Fizz-Buzz. En 100 números
+// While: Se ejecuta mientras una condición sea verdadera
 
-for (let i = 1; i <= 100; i++) {
-    
-    if(i%3 == 0 && i%5==0) {
-        console.log('Fizz-Buzz')
-    }else if(i%5 == 0){
-        console.log('Buzz')
-    } else if(i%3 == 0){
-        console.log('Fizz')
+// Se utiliza cuando no sabes de antemano cuántas veces se debe repetir el bloque de código, y la condición puede depender de algo que ocurra dentro del bucle.
+
+// Solo incluye la condición. La inicialización y la actualización se hacen por separado.
+
+let i = 0; // inicialización
+while (i<10) { // condición
+    console.log(`Número ${i}`)
+    i++; //incremento
+}
+
+
+let j = 1;
+while (j<=100){
+    if (j % 15 === 0){
+        console.log(`${j} fizz buzz!!!`)
+    } else if (j % 3 === 0){
+        console.log(`${j} fizz`)
+    } else if (j % 5 === 0) {
+        console.log(`${j} buzz`)
     } else {
-        console.log(i)
+        console.log(`${j}`)
     }
 
+    j++;
 }

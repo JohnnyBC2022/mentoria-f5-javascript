@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Jonathan Baragañao">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Juegos Olímpicos 2024</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <div class="hero">
+        <header class="header contenedor">
+            <div class="logo">
+                <img src="img/olympics-logo.png" alt="Juegos Olímpicos 2024">
+            </div>
+            <nav class="navegacion">
+                <a href="#">Inicio</a>
+                <a href="#">Deportes</a>
+                <a href="#">Atletas</a>
+                <a href="#">Programa</a>
+                <a href="#">Entradas</a>
+            </nav>
+        </header>
+
+        <div class="contenido-hero contenedor">
+            <h1>Bienvenidos a los <span>Juegos Olímpicos 2024</span></h1>
+
+            <form action="/search" method="POST" class="formulario formulario-buscar" id="formulario">
+                <input type="text" name="search" class="busqueda" placeholder="Buscar deportes, atletas, eventos...">
+                <input type="submit" value="Buscar" id="btn-submit">
+            </form>
+        </div>
+    </div> <!--.hero-->
+
+    <main class="contenido contenedor">
+        <section class="sports">
+            <h2>Deportes Populares</h2>
+            <div class="contenedor-cards">
+                <div class="card">
+                    <img src="img/sport1.jpg" alt="Atletismo">
+                    <div class="info">
+                        <p class="categoria athletics">Atletismo</p>
+                        <p class="titulo">Eventos de Pista y Campo</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="img/sport2.jpg" alt="Natación">
+                    <div class="info">
+                        <p class="categoria swimming">Natación</p>
+                        <p class="titulo">Natación Competitiva</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="img/sport3.jpg" alt="Gimnasia">
+                    <div class="info">
+                        <p class="categoria gymnastics">Gimnasia</p>
+                        <p class="titulo">Gimnasia Artística</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="img/sport4.jpg" alt="Baloncesto">
+                    <div class="info">
+                        <p class="categoria basketball">Baloncesto</p>
+                        <p class="titulo">Baloncesto Masculino y Femenino</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured">
+            <h2 class="olympics-plus">Descubre Olympics Plus</h2>
+            <div class="contenedor-cards premium">
+                <div class="info">
+                    <h3>Vive los Juegos Olímpicos como nunca antes</h3>
+                    <a href="#" class="boton btn-olympics">Explorar Ahora</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="highlights">
+            <h2>Momentos Destacados</h2>
+            <div class="contenedor-cards">
+                <div class="card">
+                    <img src="img/highlight1.jpg" alt="Ceremonia de Apertura">
+                    <div class="info">
+                        <p class="categoria highlight">Ceremonia de Apertura</p>
+                        <p class="titulo">La Gran Apertura</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="img/highlight2.jpg" alt="Final de 100m">
+                    <div class="info">
+                        <p class="categoria highlight">Final de 100m</p>
+                        <p class="titulo">100m Masculino</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="img/highlight3.jpg" alt="Finales de Gimnasia">
+                    <div class="info">
+                        <p class="categoria highlight">Finales de Gimnasia</p>
+                        <p class="titulo">All-Around Femenino</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="destinations">
+            <h2>Ciudad Anfitriona</h2>
+            <div class="contenedor-cards">
+                <div class="card">
+                    <img src="img/city1.jpg" alt="París">
+                    <div class="info">
+                        <p class="titulo">París</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="img/city2.jpg" alt="Sedes">
+                    <div class="info">
+                        <p class="titulo">Sedes Olímpicas</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="img/city3.jpg" alt="Turismo">
+                    <div class="info">
+                        <p class="titulo">Turismo</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+     <footer id="footer" class="footer">
+        <div class="contenedor">
+            <div class="nav-footer">
+                <h3 class="titulo-footer">Juegos Olímpicos 2024</h3>
+                <nav class="menu">
+                    <a href="#">Carreras</a>
+                    <a href="#">Prensa</a>
+                    <a href="#">Políticas</a>
+                    <a href="#">Ayuda</a>
+                </nav>
+            </div>
+
+            <div class="nav-footer">
+                <h3 class="titulo-footer">Descubre los Juegos</h3>
+                <nav class="menu">
+                    <a href="#">Seguridad</a>
+                    <a href="#">Créditos de Viaje</a>
+                    <a href="#">Movimiento Olímpico</a>
+                    <a href="#">Viaje de Negocios</a>
+                </nav>
+            </div>
+
+            <div class="nav-footer">
+                <h3 class="titulo-footer">Alojamientos</h3>
+                <nav class="menu">
+                    <a href="#">Beneficios de Alojar</a>
+                    <a href="#">Hospitalidad</a>
+                    <a href="#">Alojar Responsable</a>
+                    <a href="#">Centro Comunitario</a>
+                </nav>
+            </div>
+
+            <div class="nav-footer">
+                <nav class="sociales">
+                    <ul>
+                        <li><a href="http://facebook.com" target="_blank"><span>Facebook</span></a></li>
+                        <li><a href="http://twitter.com" target="_blank"><span>Twitter</span></a></li>
+                        <li><a href="http://instagram.com" target="_blank"><span>Instagram</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </footer>
+    <a href="#footer" class="btn-flotante">Idioma y Moneda</a> 
+
+    <!-- <script src="js/01-scripts.js"></script> -->
+    <!-- <script src="js/02-scripts.js"></script> -->
+    <!-- <script src="js/03-scripts.js"></script> -->
+    <script src="js/04-scripts.js"></script>
+    <script src="js/05-scripts.js"></script>
+    <script src="js/06-scripts.js"></script>
+    <script src="js/07-scripts.js"></script>
+    <script src="js/08-scripts.js"></script>
+</body>
+</html>

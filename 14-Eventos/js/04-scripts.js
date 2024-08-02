@@ -1,13 +1,26 @@
-// eventos de formulario
+// Eventos de formulario
 
 const formulario = document.querySelector('#formulario')
 
-function validarFormulario(e) {
+/* formulario.addEventListener('submit', (e)=>{
     e.preventDefault();
-    console.log('abre nueva pagina')
+    console.log('Buscando...')
+    console.log(e.target.method)
+    console.log(e.target.action)
+    console.log(e.target.value)
+}) */
+
+// elimina el comportamiento por defecto de un evento, en este caso si usamos preventDefault, no se enviará el formulario y no se abrirá el enlace que hemos definido en el action. Así podemos evitar que los enlaces no se abran hasta que hagamos una validación o lo que queramos.
+
+function validarFormulario(){
+    e.preventDefault(e);
+    console.log('Consultar una api...');
+    console.log(e.target.action);
 }
 
 formulario.addEventListener('submit',validarFormulario)
+
+
 
 const btn = document.querySelector('.btn-flotante')
 

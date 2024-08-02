@@ -307,7 +307,10 @@ main h2{
     padding: 3rem 0;
     color: var(--claro);
     text-align: center;
-}
+    
+  }
+  
+ 
 
 .footer .contenedor {
     display: grid;

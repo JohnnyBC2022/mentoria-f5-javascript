@@ -3,6 +3,7 @@ const carrito = document.querySelector('#carrito');
 const contenedorCarrito = document.querySelector('#lista-carrito tbody');
 const vaciarCarritoBtn = document.querySelector('#vaciar-carrito');
 const listaEventos = document.querySelector('#lista-eventos');
+let articulosCarrito = [];
 
 // Registro de event Listeners
 cargarEventListeners();
@@ -27,10 +28,44 @@ function leerDatosEvento(eventoEscogido) {
     // Crear un objeto con el contenido del evento actual
     const infoEvento = {
         imagen: eventoEscogido.querySelector('img').src,
-        deporte: eventoEscogido.querySelector('.categoria').textContent,
+        deporte: eventoEscogido.querySelector('.titulo').textContent,
         precio: eventoEscogido.querySelector('.precio span').textContent,
         id: eventoEscogido.querySelector('a').getAttribute('data-id'),
         cantidad: 1
     }
-    console.log(infoEvento);
+    
+    // Agregar elementos al array de carrito
+    articulosCarrito = [...articulosCarrito, infoEvento];
+
+    console.log(articulosCarrito);
+
+    carritoHTML();
+}
+
+// Muestra el carrito de compras en el HTML
+function carritoHTML() {
+
+    //Limpiar el HTML
+    limpiarHTML();
+    // Recorre el carrito y genera el HTML
+    articulosCarrito.forEach(evento=>{
+        const row = document.createElement('TR');
+        row.innerHTML = `
+        <td>
+            ${evento.deporte}
+        </td>
+        `;
+
+        // Agrega el HTML del carrito en el tbody
+        contenedorCarrito.appendChild(row);
+    })
+}
+
+// Eliminar los eventos anteriores del tbody
+function limpiarHTML() {
+    // Forma lenta
+    // contenedorCarrito.innerHTML = '';
+    while(contenedorCarrito.firstChild) {
+        contenedorCarrito.removeChild(contenedorCarrito.firstChild);
+    }
 }

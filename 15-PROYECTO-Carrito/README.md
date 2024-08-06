@@ -115,7 +115,7 @@ Para finalizar, vamos a crear un objeto con el contenido del evento actual.
 ```javascript
 const infoEvento = {
         imagen: eventoEscogido.querySelector('img').src,
-        deporte: eventoEscogido.querySelector('.categoria').textContent,
+        deporte: eventoEscogido.querySelector('.titulo').textContent,
         precio: eventoEscogido.querySelector('.precio span').textContent,
         id: eventoEscogido.querySelector('a').getAttribute('data-id'),
         cantidad: 1
@@ -123,3 +123,66 @@ const infoEvento = {
     console.log(infoEvento);
 ```
 Hemos creado un objeto con la información que nos interesa. Por un lado la ruta de la imagen, que utilizaremos para mostrar una miniatura en el carrito, el evento deportivo seleccionado, el precio de la entrada, un id que necesitaremos para identificar cada entrada que compramos y por defecto, asignaremos una cantidad inicial de 1, que posteriormente incrementaremos.
+
+## Tercer paso: Mostrar los datos del evento que seleccionamos en el carrito.
+
+Ahora que ya somos capaces de crear un objeto que contiene toda la información que queremos, vamos a crear un ***array*** para ir almacenando cada uno de los objetos que seleccionemos. Como al iniciar la página, no hemos seleccionado ningún artículo para añadir al carrito, nuestro array, al igual que el carrito, estará vacío.
+
+```javascript
+let articulosCarrito = [];
+```
+
+Una vez seleccionado un evento deportivo, iremos añadiendo el objeto con la información a nuestro array. Como no podemos perder la referencia que teníamos, tenemos que hacer una "copia" de nuestro array cada vez que añadimos artículos al carrito. Podemos usar el método ***push*** de los arrays, pero vamos a utilizar el ***spread operator***.
+
+```javascript
+articulosCarrito = [...articulosCarrito, infoEvento];
+    console.log(articulosCarrito)
+```
+De esta forma, cada vez que seleccionamos un artículo, tendremos el array que teníamos con los artículos seleccionados previamente más el que hemos seleccionado ahora.
+
+Ahora, lo que nos interesa es que se muestre esta información en nuestra aplicación. Para ello, vamos a crear una función que vamos a llamar ***carritoHTML*** que se encargue de "pintar" el HTML de forma dinámica cada vez que seleccionamos un artículo. Esta función, la invocaremos cade vez que hagamos click en el elemento con la clase ***"agregar-carrito"***. Por lo tanto, debemos llamarla dentro de la función ***leerDatosEvento()***.
+
+```javascript
+function carritoHTML() {
+    articulosCarrito.forEach(evento=>{
+        const row = document.createElement('TR');
+        row.innerHTML = `
+        <td>
+            ${evento.deporte}
+        </td>
+        `;
+    })
+}
+```
+Como articulosCarrito es un array, debemos iterar sobre cada elemento del array (recordemos que es un array de objetos) y por cada elemento del array, vamos a crear una etiqueta en el HTML de tipo ***<tr>*** y para cada una de ellas, vamos a acceder dentro del HTML y añadir el evento deportivo que estamos seleccionando.
+
+Una vez, iterado sobre nuestro array ***articulosCarrito*** vamos a añadirlo al ***contenedorCarrito*** que ya teníamos seleccionado en una variable y para "pintarlo" usamos el método ***appendChild*** en nuestra función ***carritoHTML()***.
+
+```javascript
+contenedorCarrito.appendChild(row);
+```
+
+Si observamos, nuestro carrito, ya se empieza a llenar con la información que queremos, pero hay que tener en cuenta varias consideraciones. Para empezar, estamos añadiendo el nombre del evento deportivo en la parte izquierda de la tabla y la función ***carritoHTML()*** va a pintar el array de artículos cada vez que seleccionamos un artículo. El problema es que cuando lo hacemos la primera vez, en nuestro carrito tenemos un artículo y lo pinta. Si seleccionamos otro artículo, en el HTML aparece el array que teníamos con un artículo y pintará el nuevo array, que ahora tiene 2 artículos.
+
+<img src="img/capturas/captura4.png">
+
+Por lo tanto, debemos limpiar el HTML anterior antes de crear el nuevo, para que solo nos muestre los artículos de la última selección sin repetir los anteriores. Para ello, vamos a crear una nueva función que eliminará los artículos anteriores y que invocaremos en nuestro carrito antes de recorrer el array de artículos y generar el nuevo HTML. Esto lo podemos hacer de diversas formas. Podemos hacer la limpieza de una forma lenta y sin complicaciones que va a funcionar sin problema, que es la siguiente:
+
+```javascript
+function limpiarHTML() {
+    contenedorCarrito.innerHTML = '';
+}
+```
+
+Existe una forma más óptima de hacer esta limpieza usando una sentencia de control ***while***
+
+```javascript
+while(contenedorCarrito.firstChild) {
+        contenedorCarrito.removeChild(contenedorCarrito.firstChild);
+    }
+```
+¿Qué hace este código? Recordemos que ***while*** es un bucle que se ejecutará mientras se cumpla una condición. En este caso la condición ***contenedorCarrito.firstChild*** verifica si ***contenedorCarrito*** tiene al menos un hijo (es decir, un elemento dentro de él). Si se cumple, el bucle continúa.
+
+Al cumplirse, se ejecutará una instrucción a la cual le estamos diciendo que a contenedorCarrito se le elimine un elemento hijo ***(contenedorCarrito.removeChild())*** y le decimos que elemento queremos eliminar, en este caso el primero ***(contenedorCarrito.firstChild)***.
+
+Esto se repetirá hasta que no quede ningún hijo en ***contenedorCarrito***

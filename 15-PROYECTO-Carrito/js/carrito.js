@@ -15,7 +15,22 @@ function cargarEventListeners() {
 function agregarEvento(e) {
     e.preventDefault();
     if (e.target.classList.contains('agregar-carrito')) {
-        console.log('Agregando al carrito')
+        const eventoSeleccionado = e.target.parentElement.parentElement;
+        leerDatosEvento(eventoSeleccionado);
     }
 }
 
+// Lee el contenido del HTML al que le dimos click y extrae la información del evento
+
+function leerDatosEvento(eventoEscogido) {
+
+    // Crear un objeto con el contenido del evento actual
+    const infoEvento = {
+        imagen: eventoEscogido.querySelector('img').src,
+        deporte: eventoEscogido.querySelector('.categoria').textContent,
+        precio: eventoEscogido.querySelector('.precio span').textContent,
+        id: eventoEscogido.querySelector('a').getAttribute('data-id'),
+        cantidad: 1
+    }
+    console.log(infoEvento);
+}

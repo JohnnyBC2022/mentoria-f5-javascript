@@ -61,4 +61,65 @@ function agregarEvento(e) {
 }
 ```
 
-Ahora, ya sabemos que nos estamos comunicando correctamente con el elemento que queremos, vamos a utilizar los conceptos aprendidos en ***"traversing the DOM"*** para recorrer el HTML y extraer la información que nos interesa para poder generar el HTML y que se muestre en el carrito. 
+Ahora, ya sabemos que nos estamos comunicando correctamente con el elemento que queremos, vamos a utilizar los conceptos aprendidos en ***"traversing the DOM"*** para recorrer el HTML y extraer la información que nos interesa para poder generar el HTML y que se muestre en el carrito.
+
+## Segundo paso: Leer los datos del evento que seleccionamos.
+
+El objetivo de este paso es leer el contenido del HTML al que le dimos click y extraer la información del evento que estamos añadiendo al carrito.
+
+<img src="img/capturas/captura3.png">
+
+Si observamos nuestro documento, tenemos que nuestro elemento que contiene la clase ***agregar-carrito*** esta dentro del elemento con clase ***info*** y a su vez dentro de un elemento con la clase ***card***. Es de este elemento del que vamos a querer extraer la información que queremos añadir al carrito y para poder seleccionar este elemento, podemos utilizar ***parentElement***, que tendremos que usar 2 veces, para ubicarnos en el lugar correcto. Vamos a comprobar que estamos en el lugar del documento correcto, modificando la función ***agregarEvento()*** y cuando hagamos click, llamaremos a la función que leerá los datos del elemento en el que nos encontramos, y lo más importante, sabremos que estamos situados en la parte correspondiente.
+
+```javascript
+function agregarEvento(e) {
+    e.preventDefault();
+    if (e.target.classList.contains('agregar-carrito')) {
+        console.log(e.target.parentElement.parentElement)
+        leerDatosEvento()
+    }
+}
+```
+
+A continación, vamos a mejorar un poco el código almacenando en una variable el evento seleccionado. Como ya sabemos que cuando hacemos click en cualquiera de los botones, nos selecciona el elemento que queremos, debemos pasar como argumento el curso seleccionado a la función ***leerDatosEvento()***.
+
+```javascript
+function agregarEvento(e) {
+    e.preventDefault();
+    if (e.target.classList.contains('agregar-carrito')) {
+        const eventoSeleccionado = e.target.parentElement.parentElement;
+        leerDatosEvento(eventoSeleccionado);
+    }
+}
+```
+
+Ahora, sabemos que la función ***leerDatosEvento()*** va a recibir un parámetro que podemos llamar como queramos. Y vamos a hacer que se muestre por consola el HTML que hemos seleccionado.
+
+```javascript
+function leerDatosEvento(eventoEscogido) {
+    console.log(eventoEscogido)
+}
+```
+Antes de continuar, vamos a hacer un resumen de lo que hace nuestro código hasta ahora:
+
+1. Cuando se dispara el evento (en nuestro caso, un click) y agregarEvento es llamada, la función recibe el evento como e.
+2. e.preventDefault() detiene la acción predeterminada del elemento.
+3. Si el elemento en el que se hizo click (e.target) tiene la clase ***agregar-carrito***, el código selecciona el elemento abuelo de e.target.
+4. eventoSeleccionado (el elemento abuelo) se pasa a la función leerDatosEvento.
+5. leerDatosEvento toma eventoSeleccionado y lo imprime en la consola del navegador.
+
+Esto permite capturar y manipular un elemento específico del DOM cuando ocurre un evento, y luego podemos usar esa información para realizar otras acciones.
+
+Para finalizar, vamos a crear un objeto con el contenido del evento actual.
+
+```javascript
+const infoEvento = {
+        imagen: eventoEscogido.querySelector('img').src,
+        deporte: eventoEscogido.querySelector('.categoria').textContent,
+        precio: eventoEscogido.querySelector('.precio span').textContent,
+        id: eventoEscogido.querySelector('a').getAttribute('data-id'),
+        cantidad: 1
+    }
+    console.log(infoEvento);
+```
+Hemos creado un objeto con la información que nos interesa. Por un lado la ruta de la imagen, que utilizaremos para mostrar una miniatura en el carrito, el evento deportivo seleccionado, el precio de la entrada, un id que necesitaremos para identificar cada entrada que compramos y por defecto, asignaremos una cantidad inicial de 1, que posteriormente incrementaremos.

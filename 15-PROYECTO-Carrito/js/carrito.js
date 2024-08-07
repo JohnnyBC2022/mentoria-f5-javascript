@@ -8,6 +8,12 @@ let articulosCarrito = [];
 // Registro de event Listeners
 cargarEventListeners();
 function cargarEventListeners() {
+    // Muestra los cursos de Local Storage
+    document.addEventListener('DOMContentLoaded', () =>{
+        articulosCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        carritoHTML();
+    })
+
     // Evento que se dispara cuando se añade un evento deportivo al hacer click en "Agregar al carrito"
     listaEventos.addEventListener('click', agregarEvento);
 
@@ -18,7 +24,7 @@ function cargarEventListeners() {
     vaciarCarritoBtn.addEventListener('click', () => {
         articulosCarrito = []; //reseteamos el array
         limpiarHTML(); //Eliminamos todo el HTML
-    })
+    });
 }
 
 // Funciones
@@ -97,7 +103,10 @@ function carritoHTML() {
 
         // Agrega el HTML del carrito en el tbody
         contenedorCarrito.appendChild(row);
-    })
+    });
+
+    // Añadir el carrito al Almacenamiento Local
+    sincronizarStorage();
 }
 
 // Eliminar los eventos anteriores del tbody
@@ -117,4 +126,8 @@ function eliminarEvento(e) {
         articulosCarrito = articulosCarrito.filter(evento => evento.id !== eventoId);
         carritoHTML(); // Iterar de nuevo sobre el carrito y mostrar su HTML
     }
+}
+
+function sincronizarStorage() {
+    localStorage.setItem('carrito', JSON.stringify(articulosCarrito))
 }

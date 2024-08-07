@@ -404,6 +404,42 @@ vaciarCarritoBtn.addEventListener("click", () => {
   limpiarHTML(); //Eliminamos todo el HTML
 });
 ```
+
 Ya tenemos completo nuestro primer mini proyecto. Se pueden añadir más funcionalidades a nuestro carrito, como calcular el total. Ese es un ejercicio extra que os dejo a vosotros.
 
 ## Paso extra: añadir localStorage al proyecto.
+
+Aunque no hemos visto todavía como se comporta el almacenamiento local, podemos observar que si añadimos artículos a nuestro carrito y actualizamos la página o salimos de ella, nuestro carrito con los artículos seleccionados se pierden. Para evitar ese comportamiento, vamos a añadir el código para que la información se almacene en la memoria del navegador.
+
+Para hacer esto, vamos crear una función que se va a llamar **_sincronizarStorage()_** que vamos a llamar dentro de nuestro **_carritoHTML()_**.
+
+Para almacenar la información del carrito en nuestro almacenamiento local, haremos lo siguiente:
+
+```javascript
+function sincronizarStorage() {
+  localStorage.setItem("carrito", JSON.stringify(articulosCarrito));
+}
+```
+
+Ya veremos que la información que se almacena en el local storage se hace mediante datos de tipo string, por lo tanto, lo que estamos haciendo es "guardar" la información de nuestro carrito en un elemento que se llama "carrito" y mediante el método **_stringify()_** convertimos el objeto JSON en string.
+
+Si actualizamos la página, y observamos en las herramientas de nuestro navegador, verificamos que la información se está guardando correctamente
+
+<img src="img/capturas/captura5.png">
+
+Para finalizar, nos queda recuperar esa información al cargar el documento si es que existe. Y lo haremos mediante un nuevo evento. Este evento se lanzará cuando el documento se haya cargado y lo que hará será leer los datos del item que habíamos guardado ("carrito"), que recordemos era un dato de tipo **_string_** convertido como objeto y lo asignamos a nuestro carrito.
+
+```javascript
+document.addEventListener("DOMContentLoaded", () => {
+  articulosCarrito = JSON.parse(localStorage.getItem("carrito"));
+});
+```
+
+En el caso de un usuario no hubiera añadido nunca nada al carrito, los datos estarán vacíos y obtendremos un null, así que debemos evitarlo y reasignar el array de artículos como vacío y debemos llamar a carritoHTML() para que "pinte" los elementos que tenemos almacenados en el localStorage.
+
+```javascript
+document.addEventListener("DOMContentLoaded", () => {
+  articulosCarrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  carritoHTML();
+});
+```

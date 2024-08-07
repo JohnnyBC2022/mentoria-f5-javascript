@@ -9,7 +9,10 @@ let articulosCarrito = [];
 cargarEventListeners();
 function cargarEventListeners() {
     // Evento que se dispara cuando se añade un evento deportivo al hacer click en "Agregar al carrito"
-    listaEventos.addEventListener('click', agregarEvento)
+    listaEventos.addEventListener('click', agregarEvento);
+
+    // Elimina eventos deportivos del carrito
+    carrito.addEventListener('click', eliminarEvento);
 }
 
 // Funciones
@@ -34,8 +37,25 @@ function leerDatosEvento(eventoEscogido) {
         cantidad: 1
     }
 
-    // Agregar elementos al array de carrito
-    articulosCarrito = [...articulosCarrito, infoEvento];
+    // Revisa si un elemento ya existe en el carrito
+    const existe = articulosCarrito.some(eventoEscogido => eventoEscogido.id === infoEvento.id);
+    if (existe) {
+        // Actualizamos la cantidad
+        const eventos = articulosCarrito.map(eventoEscogido => {
+            if (eventoEscogido.id === infoEvento.id) {
+                eventoEscogido.cantidad++;
+                return eventoEscogido; // devuelve el objeto actualizado
+            } else {
+                return eventoEscogido; // devuelve los objetos que no son utilizados
+            }
+        });
+        articulosCarrito = [...eventos]
+    } else {
+        // Agregar elementos al array de carrito
+        articulosCarrito = [...articulosCarrito, infoEvento];
+    }
+
+
 
     console.log(articulosCarrito);
 
@@ -49,7 +69,7 @@ function carritoHTML() {
     limpiarHTML();
     // Recorre el carrito y genera el HTML
     articulosCarrito.forEach(evento => {
-        const {imagen, deporte, precio, cantidad, id} = evento
+        const { imagen, deporte, precio, cantidad, id } = evento
         const row = document.createElement('TR');
         row.innerHTML = `
         <td>
@@ -80,5 +100,15 @@ function limpiarHTML() {
     // contenedorCarrito.innerHTML = '';
     while (contenedorCarrito.firstChild) {
         contenedorCarrito.removeChild(contenedorCarrito.firstChild);
+    }
+}
+
+// Eliminar un evento del carrito
+function eliminarEvento(e){
+    if(e.target.classList.contains('borrar-evento')){
+        const eventoId = e.target.getAttribute('data-id');
+        // Eliminar del array articulosCarrito por el data-id
+        articulosCarrito = articulosCarrito.filter(evento => evento.id !== eventoId);
+        carritoHTML(); // Iterar de nuevo sobre el carrito y mostrar su HTML
     }
 }

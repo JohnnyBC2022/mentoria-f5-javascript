@@ -278,3 +278,110 @@ articulosCarrito.forEach(evento => {
         `;
 ```
 
+## Quinto Paso: Actualizar la cantidad de elementos si el elemento ya existe.
+
+Llegados a este punto, vemos que ya se muestra en el carrito todo lo que necesitamos, pero todavía presenta problemas. En este punto, vemos que si alguien selecciona 2 veces el mismo curso, se añade 2 veces en vez de actualizarse la cantidad. Vamos a ver como solucionarlo.
+
+Podemos verificar antes de agregar elementos al array de artículos si ese artículo ya está presente en el carrito. Si ya existe, actualizaremos la cantidad y si no existe, entonces lo añadiremos al carrito. Mediante el método de arrays **_some_** podemos comparar el id del evento seleccionado con el id de los objetos que contiene la información del array del carrito.
+
+```javascript
+const existe = articulosCarrito.some(
+  (eventoEscogido) => eventoEscogido.id === infoEvento.id
+);
+console.log(existe);
+```
+
+Podemos verificar lo que ocurre mostrandolo en la consola. Si nos devuelve un **_false_**, ese evento seleccionado no existe y si nos devuelve **_true_**, es que ya existe. Entonces podemos manejar una sentencia de control que verifique si el elemento existe y en este caso actualizar la cantidad y si no existe, agregar el curso al carrito.
+
+```javascript
+if (existe) {
+  // Actualizamos la cantidad
+} else {
+  // Agregaremos el curso al carrito
+}
+```
+
+Para actualizar la cantidad, debemos iterar sobre todos los objetos del array, verificar cuál se repite y actualizar la cantidad. Para ello, vamos a usar el método **_map()_** que nos devolverá un nuevo array que hemos llamado **_eventos_**. Si el id del eventoEscogido coincide con un id de algún artículo del carrito, incrementará su cantidad en 1 y devolverá el objeto actualizado. Si no coincide, devuelve el objeto tal y como está (ya que no queremos perder ese artículo del carrito). Copiamos el array eventos en el array del carrito.
+
+Si el elemento seleccionado no está en el carrito es el código que teníamos anteriormente.
+
+```javascript
+// Revisa si un elemento ya existe en el carrito
+const existe = articulosCarrito.some(
+  (eventoEscogido) => eventoEscogido.id === infoEvento.id
+);
+if (existe) {
+  // Actualizamos la cantidad
+  const eventos = articulosCarrito.map((eventoEscogido) => {
+    if (eventoEscogido.id === infoEvento.id) {
+      eventoEscogido.cantidad++;
+      return eventoEscogido; // devuelve el objeto actualizado
+    } else {
+      return eventoEscogido; // devuelve los objetos que no son utilizados
+    }
+  });
+  articulosCarrito = [...eventos];
+} else {
+  // Agregar elementos al array de carrito
+  articulosCarrito = [...articulosCarrito, infoEvento];
+}
+```
+
+## Sexto Paso: Eliminar un artículo del carrito.
+
+Para eliminar un curso, debemos crear un nuevo evento, que al hacer click, dispare la función que vamos a crear ahora para eliminar un artículo del carrito.
+
+```javascript
+carrito.addEventListener("click", eliminarEvento);
+```
+
+Para crear la función podemos apoyarnos en las clases, para saber que clase tiene el elemento sobre el que estamos haciendo click;
+
+```javascript
+function eliminarEvento(e) {
+  console.log(e.target.classList);
+}
+```
+
+En este caso, cuando pulsamos sobre el botón para eliminar cada uno de los artículos, el **_console.log()_** nos ayuda a identificar que estamos pulsando sobre un elemento cuya clase es **_"borrar-evento"_**.
+Entonces, si existe existe este elemento, vamos a obtener su id.
+
+```javascript
+function eliminarEvento(e) {
+  console.log(e.target.classList);
+  if (e.target.classList.contains("borrar-evento")) {
+    const eventoId = e.target.getAttribute("data-id");
+  }
+}
+```
+
+Ahora debemos eliminar de nuestro array solo los artículos que tengan ese id, manteniendo el resto. Podemos hacerlo de distintas formas, pero una muy común es usando el método **_filter_** y volver a traernos todos los elementos que no coincidan con el id que queremos eliminar.
+
+```javascript
+function eliminarEvento(e) {
+  console.log(e.target.classList);
+  if (e.target.classList.contains("borrar-evento")) {
+    const eventoId = e.target.getAttribute("data-id");
+    // Eliminar del array articulosCarrito por el data-id
+    articulosCarrito = articulosCarrito.filter(
+      (evento) => evento.id !== eventoId
+    );
+    console.log(articulosCarrito);
+  }
+}
+```
+
+En la consola, ya estamos viendo que funciona todo correctamente y solo nos queda por volver a "pintar el HTML" con esta actualización llamando a la función **_carritoHTML()_**.
+
+```javascript
+function eliminarEvento(e) {
+  if (e.target.classList.contains("borrar-evento")) {
+    const eventoId = e.target.getAttribute("data-id");
+    // Eliminar del array articulosCarrito por el data-id
+    articulosCarrito = articulosCarrito.filter(
+      (evento) => evento.id !== eventoId
+    );
+    carritoHTML(); // Iterar de nuevo sobre el carrito y mostrar su HTML
+  }
+}
+```

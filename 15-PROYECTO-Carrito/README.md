@@ -385,3 +385,25 @@ function eliminarEvento(e) {
   }
 }
 ```
+
+## Séptimo Paso: Vaciar por completo el carrito.
+
+En este caso, añadiremos un nuevo evento de escucha que al hacer click, nos vacíe por completo el carrito. Como el código a añadir es pequeño, haremos uso de una función anónima.
+
+```javascript
+vaciarCarritoBtn.addEventListener("click", () => {
+  console.log("vaciando carrito...");
+});
+```
+
+En este caso, debemos hacer dos cosas, por un lado dejar vacío nuestro array de artículos y por otro limpiar el HTML para que nos muestre el carrito de nuevo vacío.
+
+```javascript
+vaciarCarritoBtn.addEventListener("click", () => {
+  articulosCarrito = []; //reseteamos el array
+  limpiarHTML(); //Eliminamos todo el HTML
+});
+```
+Ya tenemos completo nuestro primer mini proyecto. Se pueden añadir más funcionalidades a nuestro carrito, como calcular el total. Ese es un ejercicio extra que os dejo a vosotros.
+
+## Paso extra: añadir localStorage al proyecto.

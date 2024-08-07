@@ -13,6 +13,12 @@ function cargarEventListeners() {
 
     // Elimina eventos deportivos del carrito
     carrito.addEventListener('click', eliminarEvento);
+
+    //Vaciar el carrito
+    vaciarCarritoBtn.addEventListener('click', () => {
+        articulosCarrito = []; //reseteamos el array
+        limpiarHTML(); //Eliminamos todo el HTML
+    })
 }
 
 // Funciones
@@ -104,8 +110,8 @@ function limpiarHTML() {
 }
 
 // Eliminar un evento del carrito
-function eliminarEvento(e){
-    if(e.target.classList.contains('borrar-evento')){
+function eliminarEvento(e) {
+    if (e.target.classList.contains('borrar-evento')) {
         const eventoId = e.target.getAttribute('data-id');
         // Eliminar del array articulosCarrito por el data-id
         articulosCarrito = articulosCarrito.filter(evento => evento.id !== eventoId);

@@ -33,7 +33,7 @@ function leerDatosEvento(eventoEscogido) {
         id: eventoEscogido.querySelector('a').getAttribute('data-id'),
         cantidad: 1
     }
-    
+
     // Agregar elementos al array de carrito
     articulosCarrito = [...articulosCarrito, infoEvento];
 
@@ -48,11 +48,24 @@ function carritoHTML() {
     //Limpiar el HTML
     limpiarHTML();
     // Recorre el carrito y genera el HTML
-    articulosCarrito.forEach(evento=>{
+    articulosCarrito.forEach(evento => {
+        const {imagen, deporte, precio, cantidad, id} = evento
         const row = document.createElement('TR');
         row.innerHTML = `
         <td>
-            ${evento.deporte}
+            <img src="${imagen}" width="60">
+        </td>
+        <td>
+            ${deporte}
+        </td>
+        <td>
+            ${precio}
+        </td>
+        <td>
+            ${cantidad}
+        </td>
+        <td>
+            <a href="#" class="borrar-evento" data-id=${id}>X </a>
         </td>
         `;
 
@@ -65,7 +78,7 @@ function carritoHTML() {
 function limpiarHTML() {
     // Forma lenta
     // contenedorCarrito.innerHTML = '';
-    while(contenedorCarrito.firstChild) {
+    while (contenedorCarrito.firstChild) {
         contenedorCarrito.removeChild(contenedorCarrito.firstChild);
     }
 }

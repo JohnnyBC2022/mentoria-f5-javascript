@@ -1,10 +1,10 @@
 # Objetivo del proyecto
 
-Es hora de aplicar los conceptos aprendidos hasta ahora, para ello vamos a ver paso a paso como crear un carrito de compras y añadir productos de forma dinámica. Hay que tener en cuenta que el objetivo principal es repasar especialmente, la ***manipulación del DOM***, ***manejo de eventos*** y uso de ***funciones***, así como ir entendiendo la lógica de negocio.
+Es hora de aplicar los conceptos aprendidos hasta ahora, para ello vamos a ver paso a paso como crear un carrito de compras y añadir productos de forma dinámica. Hay que tener en cuenta que el objetivo principal es repasar especialmente, la **_manipulación del DOM_**, **_manejo de eventos_** y uso de **_funciones_**, así como ir entendiendo la lógica de negocio.
 
 ## Desarrollo del proyecto
 
-La explicación será paso a paso, se puede seguir la evolución de todas las partes siguiendo el historial de ***commits***.
+La explicación será paso a paso, se puede seguir la evolución de todas las partes siguiendo el historial de **_commits_**.
 
 ## Primer Paso: Entendiendo el proyecto
 
@@ -12,56 +12,56 @@ Inicialmente tenemos un carrito de compras que está vacío.
 
 <img src="img/capturas/captura1.png">
 
-En esta tabla debemos ir añadiendo productos a nuestro carrito cada vez que hagamos click en el botón agregar al carrito que tenemos en cada una de las card. Manejaremos la información como un objeto del cual obtendremos datos que añadiremos de forma dinámica al cuerpo de la tabla con identificador ***"lista-carrito"*** de nuestro documento ***HTML***.
+En esta tabla debemos ir añadiendo productos a nuestro carrito cada vez que hagamos click en el botón agregar al carrito que tenemos en cada una de las card. Manejaremos la información como un objeto del cual obtendremos datos que añadiremos de forma dinámica al cuerpo de la tabla con identificador **_"lista-carrito"_** de nuestro documento **_HTML_**.
 
 <img src="img/capturas/captura2.png">
 
 Lo primero que vamos a hacer es crear unas variables para poder acceder a la parte del HTML que nos interesa:
 
 ```javascript
-const carrito = document.querySelector('#carrito');
-const contenedorCarrito = document.querySelector('#lista-carrito tbody');
-const vaciarCarritoBtn = document.querySelector('#vaciar-carrito');
-const listaEventos = document.querySelector('#lista-eventos');
+const carrito = document.querySelector("#carrito");
+const contenedorCarrito = document.querySelector("#lista-carrito tbody");
+const vaciarCarritoBtn = document.querySelector("#vaciar-carrito");
+const listaEventos = document.querySelector("#lista-eventos");
 ```
 
-Una vez que tenemos las variables declaradas, vamos a crear una función que nos permita registrar todos los ***Event Listeners***. Y dentro de la función, manejaremos un evento que al hacer click en el botón agregar al carrito, nos añada el evento deportivo al carrito.
+Una vez que tenemos las variables declaradas, vamos a crear una función que nos permita registrar todos los **_Event Listeners_**. Y dentro de la función, manejaremos un evento que al hacer click en el botón agregar al carrito, nos añada el evento deportivo al carrito.
 
 ```javascript
 cargarEventListeners();
 function cargarEventListeners() {
-    listaEventos.addEventListener('click', agregarEvento)
+  listaEventos.addEventListener("click", agregarEvento);
 }
 
 function agregarEvento() {
-    console.log('Presionando en evento')
+  console.log("Presionando en evento");
 }
 ```
 
-Por el momento, tenemos una función que al hacer click nos muestra en la consola el mensaje ***presionando en evento***, pero tenemos un problema. El evento se dispara en cualquier parte del contenido de la lista de eventos. Habíamos visto el concepto de event bubbling, es decir, se está propagando el evento de una forma que no queremos, ya que nos interesa que solo se ejecute la función ***agregarEvento()*** al pulsar en el botón que queremos manipular.
+Por el momento, tenemos una función que al hacer click nos muestra en la consola el mensaje **_presionando en evento_**, pero tenemos un problema. El evento se dispara en cualquier parte del contenido de la lista de eventos. Habíamos visto el concepto de event bubbling, es decir, se está propagando el evento de una forma que no queremos, ya que nos interesa que solo se ejecute la función **_agregarEvento()_** al pulsar en el botón que queremos manipular.
 
-Si modificamos ligeramente la función ***agregarEvento()***, podemos saber la clase del elemento sobre el que estamos haciendo click, y esto nos va a facilitar la tarea.
+Si modificamos ligeramente la función **_agregarEvento()_**, podemos saber la clase del elemento sobre el que estamos haciendo click, y esto nos va a facilitar la tarea.
 
 ```javascript
 function agregarEvento(e) {
-    console.log(e.target.classList)
+  console.log(e.target.classList);
 }
 ```
 
-Por lo tanto, el objetivo es ejecutar la función solo cuando pulsemos sobre el elemento que contiene la clase ***agregar-carrito***. Para ello, utilizaremos una sentencia de control que nos verifique que estamos haciendo click únicamente sobre ese elemento.
+Por lo tanto, el objetivo es ejecutar la función solo cuando pulsemos sobre el elemento que contiene la clase **_agregar-carrito_**. Para ello, utilizaremos una sentencia de control que nos verifique que estamos haciendo click únicamente sobre ese elemento.
 
-Observa, que elemento tiene una apariencia de botón, pero el elemento HTML es una etiqueta ***<a></a>*** y que cuando hacemos click, la pantalla se situa en la parte de arriba, por lo tanto debemos, evitar ese comportamiento que tienen los enlaces por defecto (es decir, redirigirnos al enlace correspondiente). Para ello usamos el método ***preventDefault()***
+Observa, que elemento tiene una apariencia de botón, pero el elemento HTML es una etiqueta **_<a></a>_** y que cuando hacemos click, la pantalla se situa en la parte de arriba, por lo tanto debemos, evitar ese comportamiento que tienen los enlaces por defecto (es decir, redirigirnos al enlace correspondiente). Para ello usamos el método **_preventDefault()_**
 
 ```javascript
 function agregarEvento(e) {
-    e.preventDefault();
-    if (e.target.classList.contains('agregar-carrito')) {
-        console.log('Agregando al carrito')
-    }
+  e.preventDefault();
+  if (e.target.classList.contains("agregar-carrito")) {
+    console.log("Agregando al carrito");
+  }
 }
 ```
 
-Ahora, ya sabemos que nos estamos comunicando correctamente con el elemento que queremos, vamos a utilizar los conceptos aprendidos en ***"traversing the DOM"*** para recorrer el HTML y extraer la información que nos interesa para poder generar el HTML y que se muestre en el carrito.
+Ahora, ya sabemos que nos estamos comunicando correctamente con el elemento que queremos, vamos a utilizar los conceptos aprendidos en **_"traversing the DOM"_** para recorrer el HTML y extraer la información que nos interesa para poder generar el HTML y que se muestre en el carrito.
 
 ## Segundo paso: Leer los datos del evento que seleccionamos.
 
@@ -69,42 +69,43 @@ El objetivo de este paso es leer el contenido del HTML al que le dimos click y e
 
 <img src="img/capturas/captura3.png">
 
-Si observamos nuestro documento, tenemos que nuestro elemento que contiene la clase ***agregar-carrito*** esta dentro del elemento con clase ***info*** y a su vez dentro de un elemento con la clase ***card***. Es de este elemento del que vamos a querer extraer la información que queremos añadir al carrito y para poder seleccionar este elemento, podemos utilizar ***parentElement***, que tendremos que usar 2 veces, para ubicarnos en el lugar correcto. Vamos a comprobar que estamos en el lugar del documento correcto, modificando la función ***agregarEvento()*** y cuando hagamos click, llamaremos a la función que leerá los datos del elemento en el que nos encontramos, y lo más importante, sabremos que estamos situados en la parte correspondiente.
+Si observamos nuestro documento, tenemos que nuestro elemento que contiene la clase **_agregar-carrito_** esta dentro del elemento con clase **_info_** y a su vez dentro de un elemento con la clase **_card_**. Es de este elemento del que vamos a querer extraer la información que queremos añadir al carrito y para poder seleccionar este elemento, podemos utilizar **_parentElement_**, que tendremos que usar 2 veces, para ubicarnos en el lugar correcto. Vamos a comprobar que estamos en el lugar del documento correcto, modificando la función **_agregarEvento()_** y cuando hagamos click, llamaremos a la función que leerá los datos del elemento en el que nos encontramos, y lo más importante, sabremos que estamos situados en la parte correspondiente.
 
 ```javascript
 function agregarEvento(e) {
-    e.preventDefault();
-    if (e.target.classList.contains('agregar-carrito')) {
-        console.log(e.target.parentElement.parentElement)
-        leerDatosEvento()
-    }
+  e.preventDefault();
+  if (e.target.classList.contains("agregar-carrito")) {
+    console.log(e.target.parentElement.parentElement);
+    leerDatosEvento();
+  }
 }
 ```
 
-A continación, vamos a mejorar un poco el código almacenando en una variable el evento seleccionado. Como ya sabemos que cuando hacemos click en cualquiera de los botones, nos selecciona el elemento que queremos, debemos pasar como argumento el curso seleccionado a la función ***leerDatosEvento()***.
+A continación, vamos a mejorar un poco el código almacenando en una variable el evento seleccionado. Como ya sabemos que cuando hacemos click en cualquiera de los botones, nos selecciona el elemento que queremos, debemos pasar como argumento el curso seleccionado a la función **_leerDatosEvento()_**.
 
 ```javascript
 function agregarEvento(e) {
-    e.preventDefault();
-    if (e.target.classList.contains('agregar-carrito')) {
-        const eventoSeleccionado = e.target.parentElement.parentElement;
-        leerDatosEvento(eventoSeleccionado);
-    }
+  e.preventDefault();
+  if (e.target.classList.contains("agregar-carrito")) {
+    const eventoSeleccionado = e.target.parentElement.parentElement;
+    leerDatosEvento(eventoSeleccionado);
+  }
 }
 ```
 
-Ahora, sabemos que la función ***leerDatosEvento()*** va a recibir un parámetro que podemos llamar como queramos. Y vamos a hacer que se muestre por consola el HTML que hemos seleccionado.
+Ahora, sabemos que la función **_leerDatosEvento()_** va a recibir un parámetro que podemos llamar como queramos. Y vamos a hacer que se muestre por consola el HTML que hemos seleccionado.
 
 ```javascript
 function leerDatosEvento(eventoEscogido) {
-    console.log(eventoEscogido)
+  console.log(eventoEscogido);
 }
 ```
+
 Antes de continuar, vamos a hacer un resumen de lo que hace nuestro código hasta ahora:
 
 1. Cuando se dispara el evento (en nuestro caso, un click) y agregarEvento es llamada, la función recibe el evento como e.
 2. e.preventDefault() detiene la acción predeterminada del elemento.
-3. Si el elemento en el que se hizo click (e.target) tiene la clase ***agregar-carrito***, el código selecciona el elemento abuelo de e.target.
+3. Si el elemento en el que se hizo click (e.target) tiene la clase **_agregar-carrito_**, el código selecciona el elemento abuelo de e.target.
 4. eventoSeleccionado (el elemento abuelo) se pasa a la función leerDatosEvento.
 5. leerDatosEvento toma eventoSeleccionado y lo imprime en la consola del navegador.
 
@@ -114,55 +115,58 @@ Para finalizar, vamos a crear un objeto con el contenido del evento actual.
 
 ```javascript
 const infoEvento = {
-        imagen: eventoEscogido.querySelector('img').src,
-        deporte: eventoEscogido.querySelector('.titulo').textContent,
-        precio: eventoEscogido.querySelector('.precio span').textContent,
-        id: eventoEscogido.querySelector('a').getAttribute('data-id'),
-        cantidad: 1
-    }
-    console.log(infoEvento);
+  imagen: eventoEscogido.querySelector("img").src,
+  deporte: eventoEscogido.querySelector(".titulo").textContent,
+  precio: eventoEscogido.querySelector(".precio span").textContent,
+  id: eventoEscogido.querySelector("a").getAttribute("data-id"),
+  cantidad: 1,
+};
+console.log(infoEvento);
 ```
+
 Hemos creado un objeto con la información que nos interesa. Por un lado la ruta de la imagen, que utilizaremos para mostrar una miniatura en el carrito, el evento deportivo seleccionado, el precio de la entrada, un id que necesitaremos para identificar cada entrada que compramos y por defecto, asignaremos una cantidad inicial de 1, que posteriormente incrementaremos.
 
 ## Tercer paso: Mostrar los datos del evento que seleccionamos en el carrito.
 
-Ahora que ya somos capaces de crear un objeto que contiene toda la información que queremos, vamos a crear un ***array*** para ir almacenando cada uno de los objetos que seleccionemos. Como al iniciar la página, no hemos seleccionado ningún artículo para añadir al carrito, nuestro array, al igual que el carrito, estará vacío.
+Ahora que ya somos capaces de crear un objeto que contiene toda la información que queremos, vamos a crear un **_array_** para ir almacenando cada uno de los objetos que seleccionemos. Como al iniciar la página, no hemos seleccionado ningún artículo para añadir al carrito, nuestro array, al igual que el carrito, estará vacío.
 
 ```javascript
 let articulosCarrito = [];
 ```
 
-Una vez seleccionado un evento deportivo, iremos añadiendo el objeto con la información a nuestro array. Como no podemos perder la referencia que teníamos, tenemos que hacer una "copia" de nuestro array cada vez que añadimos artículos al carrito. Podemos usar el método ***push*** de los arrays, pero vamos a utilizar el ***spread operator***.
+Una vez seleccionado un evento deportivo, iremos añadiendo el objeto con la información a nuestro array. Como no podemos perder la referencia que teníamos, tenemos que hacer una "copia" de nuestro array cada vez que añadimos artículos al carrito. Podemos usar el método **_push_** de los arrays, pero vamos a utilizar el **_spread operator_**.
 
 ```javascript
 articulosCarrito = [...articulosCarrito, infoEvento];
-    console.log(articulosCarrito)
+console.log(articulosCarrito);
 ```
+
 De esta forma, cada vez que seleccionamos un artículo, tendremos el array que teníamos con los artículos seleccionados previamente más el que hemos seleccionado ahora.
 
-Ahora, lo que nos interesa es que se muestre esta información en nuestra aplicación. Para ello, vamos a crear una función que vamos a llamar ***carritoHTML*** que se encargue de "pintar" el HTML de forma dinámica cada vez que seleccionamos un artículo. Esta función, la invocaremos cade vez que hagamos click en el elemento con la clase ***"agregar-carrito"***. Por lo tanto, debemos llamarla dentro de la función ***leerDatosEvento()***.
+Ahora, lo que nos interesa es que se muestre esta información en nuestra aplicación. Para ello, vamos a crear una función que vamos a llamar **_carritoHTML_** que se encargue de "pintar" el HTML de forma dinámica cada vez que seleccionamos un artículo. Esta función, la invocaremos cade vez que hagamos click en el elemento con la clase **_"agregar-carrito"_**. Por lo tanto, debemos llamarla dentro de la función **_leerDatosEvento()_**.
 
 ```javascript
 function carritoHTML() {
-    articulosCarrito.forEach(evento=>{
-        const row = document.createElement('TR');
-        row.innerHTML = `
+  articulosCarrito.forEach((evento) => {
+    const row = document.createElement("TR");
+    row.innerHTML = `
         <td>
             ${evento.deporte}
         </td>
         `;
-    })
+  });
 }
 ```
-Como articulosCarrito es un array, debemos iterar sobre cada elemento del array (recordemos que es un array de objetos) y por cada elemento del array, vamos a crear una etiqueta en el HTML de tipo ***<tr>*** y para cada una de ellas, vamos a acceder dentro del HTML y añadir el evento deportivo que estamos seleccionando.
 
-Una vez, iterado sobre nuestro array ***articulosCarrito*** vamos a añadirlo al ***contenedorCarrito*** que ya teníamos seleccionado en una variable y para "pintarlo" usamos el método ***appendChild*** en nuestra función ***carritoHTML()***.
+Como articulosCarrito es un array, debemos iterar sobre cada elemento del array (recordemos que es un array de objetos) y por cada elemento del array, vamos a crear una etiqueta en el HTML de tipo **_<tr>_** y para cada una de ellas, vamos a acceder dentro del HTML y añadir el evento deportivo que estamos seleccionando.
+
+Una vez, iterado sobre nuestro array **_articulosCarrito_** vamos a añadirlo al **_contenedorCarrito_** que ya teníamos seleccionado en una variable y para "pintarlo" usamos el método **_appendChild_** en nuestra función **_carritoHTML()_**.
 
 ```javascript
 contenedorCarrito.appendChild(row);
 ```
 
-Si observamos, nuestro carrito, ya se empieza a llenar con la información que queremos, pero hay que tener en cuenta varias consideraciones. Para empezar, estamos añadiendo el nombre del evento deportivo en la parte izquierda de la tabla y la función ***carritoHTML()*** va a pintar el array de artículos cada vez que seleccionamos un artículo. El problema es que cuando lo hacemos la primera vez, en nuestro carrito tenemos un artículo y lo pinta. Si seleccionamos otro artículo, en el HTML aparece el array que teníamos con un artículo y pintará el nuevo array, que ahora tiene 2 artículos.
+Si observamos, nuestro carrito, ya se empieza a llenar con la información que queremos, pero hay que tener en cuenta varias consideraciones. Para empezar, estamos añadiendo el nombre del evento deportivo en la parte izquierda de la tabla y la función **_carritoHTML()_** va a pintar el array de artículos cada vez que seleccionamos un artículo. El problema es que cuando lo hacemos la primera vez, en nuestro carrito tenemos un artículo y lo pinta. Si seleccionamos otro artículo, en el HTML aparece el array que teníamos con un artículo y pintará el nuevo array, que ahora tiene 2 artículos.
 
 <img src="img/capturas/captura4.png">
 
@@ -170,19 +174,107 @@ Por lo tanto, debemos limpiar el HTML anterior antes de crear el nuevo, para que
 
 ```javascript
 function limpiarHTML() {
-    contenedorCarrito.innerHTML = '';
+  contenedorCarrito.innerHTML = "";
 }
 ```
 
-Existe una forma más óptima de hacer esta limpieza usando una sentencia de control ***while***
+Existe una forma más óptima de hacer esta limpieza usando una sentencia de control **_while_**.
 
 ```javascript
-while(contenedorCarrito.firstChild) {
-        contenedorCarrito.removeChild(contenedorCarrito.firstChild);
-    }
+while (contenedorCarrito.firstChild) {
+  contenedorCarrito.removeChild(contenedorCarrito.firstChild);
+}
 ```
-¿Qué hace este código? Recordemos que ***while*** es un bucle que se ejecutará mientras se cumpla una condición. En este caso la condición ***contenedorCarrito.firstChild*** verifica si ***contenedorCarrito*** tiene al menos un hijo (es decir, un elemento dentro de él). Si se cumple, el bucle continúa.
 
-Al cumplirse, se ejecutará una instrucción a la cual le estamos diciendo que a contenedorCarrito se le elimine un elemento hijo ***(contenedorCarrito.removeChild())*** y le decimos que elemento queremos eliminar, en este caso el primero ***(contenedorCarrito.firstChild)***.
+¿Qué hace este código? Recordemos que **_while_** es un bucle que se ejecutará mientras se cumpla una condición. En este caso la condición **_contenedorCarrito.firstChild_** verifica si **_contenedorCarrito_** tiene al menos un hijo (es decir, un elemento dentro de él). Si se cumple, el bucle continúa.
 
-Esto se repetirá hasta que no quede ningún hijo en ***contenedorCarrito***
+Al cumplirse, se ejecutará una instrucción a la cual le estamos diciendo que a contenedorCarrito se le elimine un elemento hijo **_(contenedorCarrito.removeChild())_** y le decimos que elemento queremos eliminar, en este caso el primero **_(contenedorCarrito.firstChild)_**.
+
+Esto se repetirá hasta que no quede ningún hijo en **_contenedorCarrito_**.
+
+## Cuarto Paso: Mostrar el resto de la información.
+
+Para mostrar el HTML de los elementos que faltan, dentro de nuestro **_"template literal"_** de la función **_carritoHTML()_** añadiremos las etiquetas que faltan, teniendo en cuenta el orden en el que queremos que se muestren. Quedando de este modo:
+
+```javascript
+articulosCarrito.forEach(evento => {
+        const row = document.createElement('TR');
+        row.innerHTML = `
+        <td>
+            <img src="${evento.imagen}" width="60">
+        </td>
+        <td>
+            ${evento.deporte}
+        </td>
+        <td>
+            ${evento.precio}
+        </td>
+        <td>
+            ${evento.cantidad}
+        </td>
+        `;
+```
+
+Si nos fijamos en el **_index.html_** en la cabecera de la tabla, habíamos dejado una celda vacía. Esta la vamos a aprovechar para poder elminar un objeto de la lista de arrays de forma dinámica.
+
+```html
+<thead>
+  <tr>
+    <th>Imagen</th>
+    <th>Deporte</th>
+    <th>Precio</th>
+    <th>Cantidad</th>
+    <th></th>
+  </tr>
+</thead>
+```
+
+Así que vamos a modificar de nuevo el template literal para añadir un elemento que nos permita eliminar un curso que estará identificado mediante su id.
+
+```javascript
+articulosCarrito.forEach(evento => {
+        const row = document.createElement('TR');
+        row.innerHTML = `
+        <td>
+            <img src="${evento.imagen}" width="60">
+        </td>
+        <td>
+            ${evento.deporte}
+        </td>
+        <td>
+            ${evento.precio}
+        </td>
+        <td>
+            ${evento.cantidad}
+        </td>
+        <td>
+            <a href="#" class="borrar-evento" data-id="${evento.id}">X</a>
+        </td>
+        `;
+```
+
+Ahora que ya vemos, que el código funciona, podemos mejorarlo. Para ello, vamos a repasar un concepto que habíamos visto que es destructuring para renombrar nuestras variables. Así que nuestro código ahora es:
+
+```javascript
+articulosCarrito.forEach(evento => {
+        const {imagen, deporte, precio, cantidad, id} = evento
+        const row = document.createElement('TR');
+        row.innerHTML = `
+        <td>
+            <img src="${imagen}" width="60">
+        </td>
+        <td>
+            ${deporte}
+        </td>
+        <td>
+            ${precio}
+        </td>
+        <td>
+            ${cantidad}
+        </td>
+        <td>
+            <a href="#" class="borrar-evento" data-id=${id}>X </a>
+        </td>
+        `;
+```
+

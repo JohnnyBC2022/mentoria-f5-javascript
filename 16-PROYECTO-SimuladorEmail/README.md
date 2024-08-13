@@ -252,4 +252,37 @@ function validar(e) {
 
 Y en vez de inyectar el error en el formulario como lo hacíamos antes, lo vamos a hacer en esta referencia. Como la referencia es siempre en función del evento que está escuchando en cada uno de los campos, la alerta se va a colocar de forma correcta.
 
-<img src="./img/captura3.png"
+<img src="./img/captura3.png">
+
+# Noveno paso: prevenir que se muestren múltiples alertas.
+
+Llegados a este punto, podemos observar que si dejamos varias veces vacío el mismo campo, la alerta se genera varias veces. Vamos a ver como evitar este comportamiento.
+
+Cuando generamos la alerta, le añadiamos una clase al elemento que habíamos creado, podemos apoyarnos en estas clases para saber si ya hay un elemento creado con esa clase y en caso de que lo hubiera no crear de nuevo la alerta. Por lo tanto, voy a añadir una nueva clase "msg-error" al elemento para poder identificarlo (podéis usar la que queráis siempre que sea única para los elementos que estamos creando y no esté presente en el resto del HTML):
+
+```javascript
+error.classList.add(
+  "bg-rose-500",
+  "text-white",
+  "p-2",
+  "text-center",
+  "msg-error"
+);
+```
+
+Ahora, dentro de nuestra función mostrarAlerta, vamos a comprobar si existe ese elemento y si la hay, la va a eliminar.
+
+```javascript
+const alerta = document.querySelector(".msg-error");
+if (alerta) {
+  alerta.remove();
+}
+```
+
+Vemos que ya no duplica alerta, pero nos genera un problema. Está buscando en el documento la clase "msg-error" y la elimina cuando existe. Esto provoca que si cambiamos a otro campo, nos va quitar la alerta. Es decir, va a encontrar la alerta aunque no estemos en ese campo y la va a limpiar y lo que queremos es que se mantenga una sola vez hasta que pase la validación.
+
+Lo que tenemos que hacer es esa limpieza cerca del input en el que estamos trabajando, así que si en vez de aplicarlo a todo el documento, le decimos que seleccione en la referencia que le estamos pasando, solo lo va a hacer ahí y no buscará en todo el documento.
+
+```javascript
+const alerta = referencia.querySelector(".msg-error");
+```

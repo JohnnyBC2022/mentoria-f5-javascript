@@ -11,10 +11,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function validar(e) {
         if (e.target.value.trim() === '') {
-            console.log('Está vacío')
+            mostrarAlerta();
         } else {
             console.log('Hay algo escrito')
         }
+    }
+
+    function mostrarAlerta() {
+        // Generar una alerta en HTML
+        const error = document.createElement('P');
+        error.textContent = 'Hubo un error';
+
+        console.log(error)
     }
 });
 

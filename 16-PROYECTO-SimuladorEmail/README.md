@@ -125,3 +125,36 @@ function validar(e) {
 }
 ```
 
+## Quinto paso: generar una alerta en la validación de campos vacíos.
+
+Ahora que ya está funcionando nuestra validación de forma correcta, vamos a manipular el DOM para mostrar un mensaje al usuario y que sepa que el campo no puede estar vacío.
+
+Podríamos escribir el código en el IF para que muestre al usuario un mensaje, pero en su lugar, vamos a crear una función para mostrar alertas (que invocaremos en esta parte), ya que nos va a permitir manejar distintos tipos de alerta y tendremos un código más reutilizable y limpio.
+
+```javascript
+function validar(e) {
+  if (e.target.value.trim() === "") {
+    mostrarAlerta();
+  } else {
+    console.log("Hay algo escrito");
+  }
+}
+
+function mostrarAlerta() {
+  console.log("Hubo un error...Está vacío");
+}
+```
+
+Como el usuario no va a inspeccionar la consola, vamos a generar una alerta en el HTML utilizando scripting de JavaScript. Lo primero que vamos a hacer es crear un elemento de HTML, para ello, tenemos el método **_createElement()_** al que le pasaremos como parámetro cualquier etiqueta de HTML. (Como buena práctica, se recomienda escribir el nombre de la etiqueta con mayúsculas, pero en minúsculas funciona)
+
+```javascript
+const error = document.createElement("P");
+```
+
+Una vez creado el elemento HTML (en este caso un párrafo), accedemos a éste y podemos asignarle un texto.
+
+```javascript
+error.textContent = 'Hubo un error';
+```
+
+Es mejor usar textContent que innerHTML, ya que innerHTML no escapa los datos. Además, textContent genera un código más seguro.

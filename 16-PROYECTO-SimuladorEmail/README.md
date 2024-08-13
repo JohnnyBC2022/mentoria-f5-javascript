@@ -154,7 +154,60 @@ const error = document.createElement("P");
 Una vez creado el elemento HTML (en este caso un párrafo), accedemos a éste y podemos asignarle un texto.
 
 ```javascript
-error.textContent = 'Hubo un error';
+error.textContent = "Hubo un error";
+console.log(error);
 ```
 
 Es mejor usar textContent que innerHTML, ya que innerHTML no escapa los datos. Además, textContent genera un código más seguro.
+
+## Sexto paso: inyectar la alerta en el HTML.
+
+Ya vemos que tenemos la alerta en la consola, así que nos queda mostrarla en el HTML, para ello vamos a seleccionar la parte donde la vamos a mostar, así que vamos a crear una nueva variable en la que vamos a almacenar un nuevo selector y lo añadimos en la parte del código donde estamos creando esas variables.
+
+```javascript
+const formulario = document.querySelector("#formulario");
+```
+
+Vamos a usar este selector, para inyectar (que se muestre) el error en la pantalla. Para ello, vamos a usar **_appendchild_** que lo que hace es añadir un elemento como hijo al elemento que le estamos diciendo y en este caso lo estará haciendo al final.
+Podríamos haber usado innerHTML, pero nos iba a sustituir todo el HTML del formulario y no nos interesa ese comportamiento.
+
+<img src="./img/captura1.png">
+
+Como este proyecto lo estamos haciendo con **_TAILWIND_** vamos a darle algunos estilos, para ello vamos a darle alguna clase en la función mostrarAlerta() de este modo:
+
+```javascript
+error.classList.add("bg-rose-500", "text-white", "p-2", "text-center");
+```
+
+## Séptimo paso: Personalización de errores.
+
+Para personalizar cada uno de los mensaje, vamos modificar ligeramente nuestra función mostrarAlerta. Ahora, va a recibir un mensaje como parámetro. El mensaje que reciba como atributo cuando invocamos a la función es lo que se va a mostrar en pantalla.
+
+```javascript
+function validar(e) {
+  if (e.target.value.trim() === "") {
+    mostrarAlerta("El campo Email es obligatorio");
+  } else {
+    console.log("Hay algo escrito");
+  }
+}
+
+function mostrarAlerta(mensaje) {
+  // Generar una alerta en HTML
+  const error = document.createElement("P");
+  error.textContent = mensaje;
+  error.classList.add("bg-rose-500", "text-white", "p-2", "text-center");
+
+  // Inyectar el error al formulario
+  formulario.appendChild(error);
+}
+```
+
+El problema que tenemos ahora, es que da igual el campo que dejemos vacío, nos va a mostrar siempre el mismo mensaje. Pero cuando estamos validando un campo, podemos saber a que campo estamos accediendo mediante **_e.target_**. Hay un montón de atributos a los que podemos acceder dentro de cada input, así que vamos a usarlos para mostrar un mensaje más personalizado según el campo que dejemos vacío. En este caso, podemos usar el **_id, name u otro que nos permita averiguar cada campo_**.
+
+Así que si reemplazamos el mensaje por:
+
+```javascript
+mostrarAlerta(`El campo ${e.target.name} es obligatorio`);
+```
+Nos mostrará ese mensaje de forma dinámica en función del nombre del input.

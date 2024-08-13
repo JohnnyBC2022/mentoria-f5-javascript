@@ -210,4 +210,46 @@ Así que si reemplazamos el mensaje por:
 ```javascript
 mostrarAlerta(`El campo ${e.target.name} es obligatorio`);
 ```
+
 Nos mostrará ese mensaje de forma dinámica en función del nombre del input.
+
+## Octavo paso: mostrar las alertas junto a su campo.
+
+Vamos a modificar un poco el código para inyectar cada alerta cerca de su campo. Para ello, vamos a utilizar los conceptos vistos en **_traversing the DOM_**
+
+Lo primero que tenemos que hacer es indicarle a la función mostrarAlerta que le vamos pasar como parámetro el lugar donde queremos inyectar el HTML de la alerta, es decir le vamos a indicar una referencia.
+
+```javascript
+function mostrarAlerta(mensaje, referencia) {
+  // Generar una alerta en HTML
+  const error = document.createElement("P");
+  error.textContent = mensaje;
+  error.classList.add("bg-rose-500", "text-white", "p-2", "text-center");
+
+  // Inyectar el error al formulario
+  formulario.appendChild(error);
+}
+```
+
+Si nos fijamos en el HTML:
+
+<img src="./img/captura2.png">
+
+Podemos observar, que cada input está dentro de una div y es a esta div a la que queremos acceder, para ello podemos usar **_parentElement_** y esta es la referencia que le vamos a pasar a nuestra función como argumento dentro de nuestra función validar.
+
+```javascript
+function validar(e) {
+  if (e.target.value.trim() === "") {
+    mostrarAlerta(
+      `El campo ${e.target.name} es obligatorio`,
+      e.target.parentElement
+    );
+  } else {
+    console.log("Hay algo escrito");
+  }
+}
+```
+
+Y en vez de inyectar el error en el formulario como lo hacíamos antes, lo vamos a hacer en esta referencia. Como la referencia es siempre en función del evento que está escuchando en cada uno de los campos, la alerta se va a colocar de forma correcta.
+
+<img src="./img/captura3.png"

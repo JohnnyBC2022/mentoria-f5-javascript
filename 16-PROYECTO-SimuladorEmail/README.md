@@ -36,9 +36,9 @@ inputEmail.addEventListener("blur", function () {
 });
 ```
 
-En este caso, añadimos un ***Evento de escucha*** al campo Email de tipo ***"blur"***. Cuando el usuario, pierda el foco en este campo, es decir, cuando el usuario cambie a otro campo o haga click fuera del formulario, se ejecutará el código que tenemos en la función (en este caso el console.log())
+En este caso, añadimos un **_Evento de escucha_** al campo Email de tipo **_"blur"_**. Cuando el usuario, pierda el foco en este campo, es decir, cuando el usuario cambie a otro campo o haga click fuera del formulario, se ejecutará el código que tenemos en la función (en este caso el console.log())
 
-Hay otro tipo de evento para validación de campos de formulario que es ***input*** que ejecutará la función mientras el usuario esté escribiendo en ese campo, pero no lo hace cuando el usuario pierda el foco en el campo.
+Hay otro tipo de evento para validación de campos de formulario que es **_input_** que ejecutará la función mientras el usuario esté escribiendo en ese campo, pero no lo hace cuando el usuario pierda el foco en el campo.
 
 Una vez que ya sabemos, que estamos "escuchando" el elemento del DOM que nos interesa, queremos averiguar lo que el usuario está escribiendo, por lo tanto debemos escuchar el valor de ese elemento.
 
@@ -49,3 +49,49 @@ inputEmail.addEventListener("blur", function (e) {
 ```
 
 Ahora, si escribimos algo en el campo Email, vemos como se muestra en la consola del navegador lo que estamos escribiendo.
+
+Para el resto de campos que queremos validar, podríamos hacer exactamente lo mismo con el resto de las variables y funcionaría correctamente lo que estamos tratando de hacer.
+
+```javascript
+inputEmail.addEventListener("blur", function (e) {
+  console.log(e.target.value);
+});
+inputAsunto.addEventListener("blur", function (e) {
+  console.log(e.target.value);
+});
+inputMensaje.addEventListener("blur", function (e) {
+  console.log(e.target.value);
+});
+```
+
+## Tercer paso: crear una función para validar
+
+Ya hemos visto que el código funciona correctamente hasta ahora, pero una buena práctica es refactorizar el código (en mi caso y en el de muchos programadores, cuando el código hace 3 veces lo mismo, se puede extraer a una función).
+
+En este caso vamos a crear una función para validar los campos del formulario, por el momento nuestra función va a ser la siguiente (así comprobamos que funciona):
+
+```javascript
+function validar() {
+  console.log("desde la función de validar");
+}
+```
+
+Entonces, debemos modificar nuestros eventos, para que ejecuten la función **_validar()_** cada vez que se dispare ese evento.
+
+```javascript
+inputEmail.addEventListener("blur", validar);
+inputAsunto.addEventListener("blur", validar);
+inputMensaje.addEventListener("blur", validar);
+```
+
+**_IMPORTANTE: LA SINTAXIS ES SIN PARÉNTESIS _**
+La sintaxis en este caso es el nombre de la función sin paréntesis, ya que queremos que se ejecute una vez lanzado el evento de escucha. Si le pusieramos los paréntesis, estaríamos invocando a la función y se ejecutaría cuando cargue el documento HTML (Recuerda, que estamos ejecutando nuestro código desde un evento de tipo 'DOMContentLoaded').
+
+Para que nuestra función escuche el evento en cada campo debemos pasarlo como parámetro a la función. Esto hará que se ejecute el código dentro del elemento que corresponda cuando perdamos el foco en cada uno de los campos correspondientes.
+
+```javascript
+function validar(e) {
+  console.log(e.target.value);
+}
+```
+Ahora tenemos 3 eventos que utilizan la misma función que podemos reutilizar todas las veces que queramos.

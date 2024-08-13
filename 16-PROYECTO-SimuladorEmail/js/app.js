@@ -10,7 +10,11 @@ document.addEventListener('DOMContentLoaded', function () {
     inputMensaje.addEventListener('blur', validar)
 
     function validar(e) {
-        console.log(e.target.value)
+        if (e.target.value.trim() === '') {
+            console.log('Está vacío')
+        } else {
+            console.log('Hay algo escrito')
+        }
     }
 });
 

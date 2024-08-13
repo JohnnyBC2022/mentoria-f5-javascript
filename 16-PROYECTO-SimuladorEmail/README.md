@@ -94,4 +94,34 @@ function validar(e) {
   console.log(e.target.value);
 }
 ```
+
 Ahora tenemos 3 eventos que utilizan la misma función que podemos reutilizar todas las veces que queramos.
+
+## Cuarto paso: detectar si hay campos vacíos.
+
+De forma sencilla, en un campo no hay nada escrito si el valor de ese campo es un **_string_** vacío. Por lo tanto, podemos utilizar una sentencia de control que nos diga que está vacío si no hay nada escrito y que nos diga que no lo está si hay algo escrito en ese input. Esto se puede hacer usando un **_IF...ELSE_**.
+
+```javascript
+function validar(e) {
+  if (e.target.value === "") {
+    console.log("Está vacío");
+  } else {
+    console.log("Hay algo escrito");
+  }
+}
+```
+
+Este código tiene un problema, si dentro de un campo pulsamos varias veces sobre la barra espaciadora y pasamos al siguiente campo, la consola nos muestra el mensaje de que hay algo escrito. Esto es debido a que los espacios en blanco son caracteres (recordar en el capítulo de strings que cuando contábamos caracteres los espacios en blanco cuentan).
+
+Así que debemos añadir un método a la condición del IF que nos elimine los espacios en blanco al principio y final de cada campo (Ver método **_TRIM_**). Por lo tanto, nuestra validación ya se comporta como queremos:
+
+```javascript
+function validar(e) {
+  if (e.target.value.trim() === "") {
+    console.log("Está vacío");
+  } else {
+    console.log("Hay algo escrito");
+  }
+}
+```
+

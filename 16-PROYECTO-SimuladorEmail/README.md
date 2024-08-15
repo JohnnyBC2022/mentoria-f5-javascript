@@ -828,7 +828,7 @@ La única modificación que hago es en la línea 22, donde le cambio la propieda
 Una vez que tenemos el HTML y el CSS, vamos a mostrar el spinner cuando el usuario envíe el formulario mediante el botón submit.
 
 ```javascript
-btnSubmit.addEventListener("submit", enviarEmail);
+formulario.addEventListener("submit", enviarEmail);
 ```
 
 Vamos a crear la función enviarEmail() y le quitamos el comportamiento que tiene por defecto:
@@ -869,3 +869,53 @@ comprobarEmail();
 ```
 
 Como estamos reutilizando este código, podemos crear una función para ejecutar el reinicio del formulario cada vez que nos interese.
+
+```javascript
+function resetFormulario() {
+  // Reiniciar el objeto:
+  email.email = "";
+  email.asunto = "";
+  email.mensaje = "";
+
+  formulario.reset();
+  comprobarEmail();
+}
+```
+
+Esta función la invocaremos en el evento del reset y en la función de enviarEmail()
+
+## Dieciseisavo paso: mostrar mensaje de correo enviado correctamente.
+
+Para finalizar, vamos a mostrar un mensaje de correo añadido correctamente y que se elimine después de 3 segundos. Para ello, dentro de la función **_enviarEmail()_** vamos a crear un elemento de tipo **_párrafo_** y añadirle clases de Tailwind.
+
+```javascript
+const alertaExito = document.createElement("P");
+alertaExito.classList.add(
+  "bg-teal-400",
+  "text-white",
+  "p-2",
+  "text-center",
+  "rounded-lg",
+  "mt-10",
+  "font-bold",
+  "text-sm",
+  "uppercase"
+);
+```
+
+Añadimos el mensaje que queremos mostrar e inyectamos el elemento creado en el HTML.
+
+```javascript
+alertaExito.textContent = "Correo electrónico enviado correctamente";
+formulario.appendChild(alertaExito);
+```
+
+Para finalizar, hacemos que ese mensaje desaparezca a los 3 segundos:
+
+```javascript
+setTimeout(() => {
+  alertaExito.remove();
+}, 3000);
+```
+
+

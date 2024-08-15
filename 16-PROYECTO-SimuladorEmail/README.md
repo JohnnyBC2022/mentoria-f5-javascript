@@ -422,4 +422,77 @@ Nos queda una parte por resolver, ya que ahora mismo si escribimos algo en los o
 if(e.target.id === 'email' && !validarEmail(e.target.value))
 ```
 
-Con el uso del operador ***AND (&&)*** le estamos diciendo que si el elemento sobre el que estamos escuchando el evento su id es "email" y lo que nos devuelve validarEmail no es true, se ejecutará ***mostrarAlerta()***. Es decir, se tienen que cumplir las dos condiciones para que nos muestre la alerta correspondiente.
+Con el uso del operador **_AND (&&)_** le estamos diciendo que si el elemento sobre el que estamos escuchando el evento su id es "email" y lo que nos devuelve validarEmail no es true, se ejecutará **_mostrarAlerta()_**. Es decir, se tienen que cumplir las dos condiciones para que nos muestre la alerta correspondiente.
+
+## Duodécimo paso: Habilitar el botón de enviar cuando la validación sea correcta.
+
+Ahora que las alertas de error funcionan correctamente, ya podríamos enviar un correo electrónico, para ello, vamos a habilitar el botón de enviar. Si observamos, la parte del HTML donde hemos creado el botón, tiene una propiedad **_disabled_** y una clase **_opacity-50_**:
+
+```HTML
+<button
+  type="submit"
+  class="flex-1 bg-teal-900 text-white flex justify-center gap-2 items-center p-3 opacity-50"
+  disabled
+>
+```
+
+Una vez que los campos estan rellenados correctamente, debe habilitarse este botón y la información de los campos vamos a introducirlo en un objeto que estará listo para enviarse. Así que lo primero que vamos a hacer es crear un objeto con la información de los campos, que inicialmente estará vacío:
+
+```javascript
+const email = {
+  email: "",
+  asunto: "",
+  mensaje: "",
+};
+```
+
+Este objeto, se debe ir completando a medida que pasemos las distintas validaciones. Es decir, si escribimos en el campo email y pasa su validación el objeto debe contener el valor del input email, y así sucesivamente. ¿En qué parte de nuestro código deberíamos hacer esto?.
+
+Un buen lugar para realizarlo sería, al final de la función validar, para ello vamos a escribir el siguiente código.
+
+```javascript
+email[e.target.name] = e.target.value.trim().toLowerCase();
+console.log(email);
+```
+
+Si observamos un momento el HTML en cualquiera de los input:
+
+```html
+<input
+  id="asunto"
+  type="text"
+  name="asunto"
+  placeholder="Asunto Email"
+  class="border border-gray-300 px-3 py-2 rounded-lg"
+/>
+```
+
+Tenemos un objeto que contiene 3 **_pares clave-valor_**, donde las claves son "email, asunto y mensaje" que inicialmente están vacíos. Para acceder de forma dinámica a cada uno de los elementos que disparan el evento, podemos apoyarnos en el id o el name de la etiqueta html que es lo que coincide con el nombre del input que queremos manejar **_email[e.target.name]_** y le asignamos el valor recogido en el input **_e.target.value_**. Aunque ya habíamos eliminado los espacios, lo volvemos a hacer y lo convertimos todo a minúsculas sobre todo para que el correo esté siempre en minúsculas y para poder hacer comprobaciones de forma más sencilla. Vemos que esto funciona correctamente:
+
+<img src="./img/captura4.png" >
+
+Ahora en vez del console.log, vamos a comprobar el objeto de email, para ello vamos a crear una función que nos compruebe el email que vamos a invocar después de asignar los valores al objeto.
+
+```javascript
+function comprobarEmail() {
+  console.log(email);
+}
+```
+
+Esta función nos va a devolver el objeto email, pero como solo nos interesan los valores del objeto, podemos usar un método de objetos para que nos muestre los valores:
+
+```javascript
+function comprobarEmail() {
+  console.log(Object.values(email));
+}
+```
+
+Aquí observamos, que la consola nos muestra los valores del objeto en forma de Array y por lo tanto, podemos utilizar los métodos de array **_(includes)_** para saber si hay algún campo que esté vacío y nos devolverá un true si alguno de los campos está vacío y un false si todos los input contienen información:
+
+```javascript
+function comprobarEmail() {
+  console.log(Object.values(email).includes(''));
+}
+```
+
+Ahora ya podemos habilitar el botón cuando esta comprobación sea falsa.

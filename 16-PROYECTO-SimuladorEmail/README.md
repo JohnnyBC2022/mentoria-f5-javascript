@@ -254,7 +254,7 @@ Y en vez de inyectar el error en el formulario como lo hacíamos antes, lo vamos
 
 <img src="./img/captura3.png">
 
-# Noveno paso: prevenir que se muestren múltiples alertas.
+## Noveno paso: prevenir que se muestren múltiples alertas.
 
 Llegados a este punto, podemos observar que si dejamos varias veces vacío el mismo campo, la alerta se genera varias veces. Vamos a ver como evitar este comportamiento.
 
@@ -286,3 +286,104 @@ Lo que tenemos que hacer es esa limpieza cerca del input en el que estamos traba
 ```javascript
 const alerta = referencia.querySelector(".msg-error");
 ```
+
+## Décimo paso: ocultar alertas si pasa la validación.
+
+Recordemos que hasta ahora tenemos esta función de validar
+
+```javascript
+function validar(e) {
+  if (e.target.value.trim() === "") {
+    mostrarAlerta(
+      `El campo ${e.target.name} es obligatorio`,
+      e.target.parentElement
+    );
+  } else {
+    console.log("Hay algo escrito");
+  }
+}
+```
+
+En realidad, no necesitamos ese else. Si la función validar se encuentra con un campo vacío, podemos parar la ejecución y que no haga nada más, con lo que nos evitaremos una ejecución de código innecesario. Para hacer esto, usaremos la palabra reservada **_return_**. Nuestro código pasa a ser el siguiente:
+
+```javascript
+function validar(e) {
+  if (e.target.value.trim() === "") {
+    mostrarAlerta(
+      `El campo ${e.target.name} es obligatorio`,
+      e.target.parentElement
+    );
+    return;
+  }
+  console.log("después del IF");
+}
+```
+
+Es decir, ahora tenemos una función validar que si encuentra un campo vacío, mostrará la alerta que corresponda y se parará ahí, ya no ejecutará más. Esto va a simplificar la lógica del código y será más fácil de mantener ya que usando **_IF_** tenemos un solo camino y si usaramos **_IF...ELSE_** tendríamos que manejar múltiples ramas de ejecución.
+
+En este punto, y una vez comprobado que el campo no está vacío vamos a llamar a una función que se llama **_limpiarAlerta()_** que vamos a llamarla en la función **_validar()_** y crearla a continuación:
+
+```javascript
+function limpiarAlerta() {
+  console.log("desde limpiar alerta");
+}
+```
+
+Esta función solo se va a invocar en el caso de que pasemos la validación, por lo tanto si no dejamos vacío el campo, veremos en la consola el mensaje "desde limpiar alerta". Ahora, nos queda mucho más claro que si el campo está vacío, la función validar ejecutará la función mostrarAlerta, si no lo está ejecutará limpiarAlerta.
+
+Puede ocurrir que tengamos alertas en distintos campos, por lo tanto, tenemos que pasarle la referencia de la alerta que tiene que eliminar. Al igual que en mostrarAlerta, le podemos pasar como argumento **_e.target.parentElement_** y así la función ya sabrá que alerta es la que queremos eliminar. Por lo tanto, podemos hacer exactamente los mismo que habíamos hecho cuando comprobábamos si ya existe una alerta.
+
+```javascript
+function limpiarAlerta(referencia) {
+  const alerta = referencia.querySelector(".msg-error");
+  if (alerta) {
+    alerta.remove();
+  }
+}
+```
+
+Podemos observar, que si en el selector de la clase que llamamos alerta, cambiamos esa referencia por **_document_** puede parecer que el código también funciona, pero no es así, ya que en ese caso siempre va a eliminar el primer elemento que encuentre en el documento HTML con la clase **_msg-error_**.
+
+Como tenemos el mismo código repetido en dos sitios distintos, podemos refactorizar y en mostrarAlerta, invocar a limpiarAlerta, ya que el código es el mismo, pasándole como argumento referencia.
+
+Como recordatorio, en este punto tenemos 3 funciones:
+
+```javascript
+function validar(e) {
+  if (e.target.value.trim() === "") {
+    mostrarAlerta(
+      `El campo ${e.target.name} es obligatorio`,
+      e.target.parentElement
+    );
+    return;
+  }
+  limpiarAlerta(e.target.parentElement);
+}
+
+function mostrarAlerta(mensaje, referencia) {
+  limpiarAlerta(referencia);
+  // Generar una alerta en HTML
+  const error = document.createElement("P");
+  error.textContent = mensaje;
+  error.classList.add(
+    "bg-rose-500",
+    "text-white",
+    "p-2",
+    "text-center",
+    "msg-error"
+  );
+  // Inyectar el error al formulario
+  referencia.appendChild(error);
+}
+
+function limpiarAlerta(referencia) {
+  // Comprobar si ya existe una alerta
+  const alerta = referencia.querySelector(".msg-error");
+  if (alerta) {
+    alerta.remove();
+  }
+}
+```
+
+
+

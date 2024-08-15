@@ -424,7 +424,7 @@ if(e.target.id === 'email' && !validarEmail(e.target.value))
 
 Con el uso del operador **_AND (&&)_** le estamos diciendo que si el elemento sobre el que estamos escuchando el evento su id es "email" y lo que nos devuelve validarEmail no es true, se ejecutará **_mostrarAlerta()_**. Es decir, se tienen que cumplir las dos condiciones para que nos muestre la alerta correspondiente.
 
-## Duodécimo paso: Habilitar el botón de enviar cuando la validación sea correcta.
+## Duodécimo paso: Habilitar el botón de enviar cuando la validación sea correcta (Parte I).
 
 Ahora que las alertas de error funcionan correctamente, ya podríamos enviar un correo electrónico, para ello, vamos a habilitar el botón de enviar. Si observamos, la parte del HTML donde hemos creado el botón, tiene una propiedad **_disabled_** y una clase **_opacity-50_**:
 
@@ -491,8 +491,153 @@ Aquí observamos, que la consola nos muestra los valores del objeto en forma de 
 
 ```javascript
 function comprobarEmail() {
-  console.log(Object.values(email).includes(''));
+  console.log(Object.values(email).includes(""));
 }
 ```
 
-Ahora ya podemos habilitar el botón cuando esta comprobación sea falsa.
+Ahora ya podemos saber que el usuario ha escrito un email que está completo.
+
+## Treceavo paso: Habilitar el botón de enviar cuando la validación sea correcta (Parte II).
+
+El botón sobre el que queremos trabajar es de tipo submit, así que vamos a guardarlo en una variable junto a los selectores:
+
+```javascript
+const btnSubmit = document.querySelector('#formulario button[type="submit"]');
+```
+
+Como tenemos la comprobación de antes cuando no se cumpla, al botón de tipo submit le quitaremos la clase **_"opacity-50"_** y también le quitaremos el atributo **_disabled_**
+
+```javascript
+function comprobarEmail() {
+  if (Object.values(email).includes("")) {
+  } else {
+    btnSubmit.classList.remove("opacity-50");
+    btnSubmit.disabled = false;
+  }
+}
+```
+
+Nos encontramos con un nuevo problema a solucionar y es que si el usuario ahora borra un campo antes de enviar, la alerta funciona, pero el botón de enviar está habilitado y eso no debería ocurrir. Para solucionarlo, debemos comprobar el email también en el caso de que fallen las validaciones.
+
+```javascript
+ function validar(e) {
+        if (e.target.value.trim() === '') {
+            mostrarAlerta(`El campo ${e.target.name} es obligatorio`, e.target.parentElement);
+            comprobarEmail();
+            return;
+        }
+
+        if(e.target.id === 'email' && !validarEmail(e.target.value)){
+            mostrarAlerta('El email introducido no es válido', e.target.parentElement);
+            comprobarEmail();
+            return;
+        };
+```
+
+Si hacemos una comprobación, podemos observar 2 cosas, por un lado, el botón no se deshabilita ya que no estamos restaurando las clases y por el otro, que la información del objeto no se actualiza. Debemos arreglar ambas cosas. Primero reiniciamos el valor del objeto sobre el que estamos escuchando el objeto:
+
+```javascript
+ function validar(e) {
+        if (e.target.value.trim() === '') {
+            mostrarAlerta(`El campo ${e.target.name} es obligatorio`, e.target.parentElement);
+            email[e.target.name] = '';
+            comprobarEmail();
+            return;
+        }
+
+        if(e.target.id === 'email' && !validarEmail(e.target.value)){
+            mostrarAlerta('El email introducido no es válido', e.target.parentElement);
+            email[e.target.name] = '';
+            comprobarEmail();
+            return;
+        };
+```
+
+y por el otro asignamos las clases que tenían al inicio:
+
+```javascript
+function comprobarEmail() {
+  if (Object.values(email).includes("")) {
+    btnSubmit.classList.add("opacity-50");
+    btnSubmit.disabled = true;
+  } else {
+    btnSubmit.classList.remove("opacity-50");
+    btnSubmit.disabled = false;
+  }
+}
+```
+
+Podemos mejorar un poco el código, eliminando el else y parando la ejecución cuando sea true la condición que hay en **_comprobarEmail()_**.
+
+```javascript
+function comprobarEmail() {
+  console.log(email);
+  if (Object.values(email).includes("")) {
+    btnSubmit.classList.add("opacity-50");
+    btnSubmit.disabled = true;
+    return;
+  }
+
+  btnSubmit.classList.remove("opacity-50");
+  btnSubmit.disabled = false;
+}
+```
+
+Vemos que funciona todo correctamente, si queremos una experiencia de usuario distinta, en los eventos, podemos usar un evento de tipo **_input_** en vez de **_blur_**. La que más nos guste
+
+## Catorceavo paso: personalizar el botón de reset.
+
+Si rellenamos el formulario y lo queremos limpiar, vemos que lo hace, ya que este tipo de botón en HTML se comporta así, pero si queremos que salga una alerta preguntando al usuario, por si pulsa el botón por error, podemos hacerlo de la siguiente manera:
+
+Lo primero de todo es crear una variable para seleccionar ese elemento:
+
+```javascript
+const btnReset = document.querySelector('#formulario button[type="reset"]');
+```
+
+Luego, vamos a añadir un evento de escucha cuando el usuario haga click en ese botón y ahí le vamos a asignar una función de tipo **_callback_** ya que no es mucho código el que vamos a usar aquí y le deshabilitamos el comportamiento que tiene por defecto (el de limpiar todo el formulario):
+
+```javascript
+btnReset.addEventListener("click", function (e) {
+  e.preventDefault();
+});
+```
+
+Para añadirle el comportamiento de limpiar el formulario, como ya teníamos la variable que selecciona el formulario, le podemos decir que ejecute el mismo método que utiliza HTML para hacerlo:
+
+```javascript
+formulario.reset();
+```
+
+Hay que tener en cuenta que si rellenamos todo el formulario, se habilita el botón de enviar, pero si en vez de enviar la información, pulsamos sobre el botón de reset, el botón de enviar permanece habilitado. Esto es porque no hemos reiniciado el objeto, una vez reiniciado debemos comprobar otra vez el objeto Email, para que se reajusten las clases:
+
+```javascript
+btnReset.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  // Reiniciar el objeto:
+  email.email = "";
+  email.asunto = "";
+  email.mensaje = "";
+
+  formulario.reset();
+  comprobarEmail();
+});
+```
+
+Si usamos uno de los métodos que ya vienen incluidos en Javascript para preguntar al usuario, podemos hacer lo siguiente y ya tenemos el comportamiento deseado en el botón de reset:
+
+```javascript
+btnReset.addEventListener("click", function (e) {
+  e.preventDefault();
+  if (confirm("¿Estás seguro de que deseas reiniciar el formulario?")) {
+    // Reiniciar el objeto:
+    email.email = "";
+    email.asunto = "";
+    email.mensaje = "";
+
+    formulario.reset();
+    comprobarEmail();
+  }
+});
+```

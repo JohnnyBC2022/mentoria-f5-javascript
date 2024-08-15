@@ -385,5 +385,41 @@ function limpiarAlerta(referencia) {
 }
 ```
 
+## Undécimo paso: validar un email con una expresión regular.
 
+Hasta este paso, la validación de nuestro formulario va tomando forma, vemos que si los campos están vacíos, se muestran las alertas, que no se repiten dos veces en el mismo campo y que se eliminan si los campos no están vacíos. Pero en el campo email podemos escribir cualquier cosa y pasa la validación. Esto no es correcto, ya que ese campo debería pasar la validación si el campo no está vacío y contiene un correo electrónico válido. Para evitarlo nos vamos a apoyar en las <a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Regular_expressions" target="_blank">Expresiones regulares</a>.
 
+La expresión regular para comprobar que un string sea un email válido es la siguiente (podemos encontrarla en **Internet**):
+
+```javascript
+const regex = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+```
+
+Vamos a crear una función para validar un correo electrónico:
+
+```javascript
+function validarEmail(email) {
+  const regex = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+  const resultado = regex.test(email);
+  console.log(resultado);
+}
+```
+
+Dentro de las expresiones regulares existen métodos predefinidos, en este caso, usaremos **_test_** para poder validar el campo email con los datos rellenados por el usuario. Si se cumple la validación, el test mostrará en la consola **_true_**. Y esta función la invocaremos en la función **_validar()_**.
+
+Si devolvemos ese resultado, usando un return, podemos volver a la función validar y cuando la validación no sea true, entonces mostraremos una alerta:
+
+```javascript
+if (!validarEmail(e.target.value)) {
+  mostrarAlerta("El email introducido no es válido", e.target.parentElement);
+  return;
+}
+```
+
+Nos queda una parte por resolver, ya que ahora mismo si escribimos algo en los otros campos que no sea el campo email cualquier texto que no sea un correo electrónico válido, nos mostrará ese mensaje también en ese campo. Debemos modificar nuestro código para que sólo aplique en el campo email. Podemos hacerlo ampliando la condición a evaluar dentro del **_IF_**:
+
+```javascript
+if(e.target.id === 'email' && !validarEmail(e.target.value))
+```
+
+Con el uso del operador ***AND (&&)*** le estamos diciendo que si el elemento sobre el que estamos escuchando el evento su id es "email" y lo que nos devuelve validarEmail no es true, se ejecutará ***mostrarAlerta()***. Es decir, se tienen que cumplir las dos condiciones para que nos muestre la alerta correspondiente.

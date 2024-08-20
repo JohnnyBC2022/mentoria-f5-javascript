@@ -179,4 +179,92 @@ year.addEventListener("change", (e) => {
 });
 ```
 
+## Sexto paso: mostrar los resultados del filtrado en el HTML.
+
+Como queremos que se muestre el listado de vehículos siempre y que se actualize la lista cada vez que seleccionamos un campo, debemos pasar como parámetro vehículos en la función que muestra los vehículos:
+
+```javascript
+function mostrarVehiculos(vehiculos)
+```
+
+y en el evento de carga, se debe pasar como argumento cuando llamamos a la función:
+
+```javascript
+mostrarVehiculos(vehiculos);
+```
+
+De esta forma, se mostrarán siempre la lista de vehículos. Cuando cargamos la aplicación por primera vez se cargará el listado con todos los vehículos y cuando seleccionemos algún campo se mostrará el listado de vehículos ya filtrado.
+
+Ahora mismo parece que no funciona, pero si nos fijamos en los resultados y hacemos una búsqueda, vemos que se muestra el resultado de la búsqueda a continación del listado sin filtrar. Esto es por el comportamiento de **_appendChild_**. Para que esto no ocurra, si recordamos de los proyectos anteriores, en la función mostrar vehículos, antes de recorrer el objeto para que nos pinte cada par clave-valor debemos limpiar el HTML previo:
+
+```javascript
+function mostrarVehiculos(vehiculos) {
+    limpiarHTML(); //Elimina el HTML ya existente
+```
+
+Y crearemos la función para limpiar el HTML, tal y como ya hemos visto:
+
+```javascript
+function limpiarHTML() {
+  while (resultado.firstChild) {
+    resultado.removeChild(resultado.firstChild);
+  }
+}
+```
+
+Ahora, ya vemos como el HTML se actualiza de forma dinámica cada vez que modificamos un campo.
+
+## Filtrar por precio
+
+En este punto vamos a hacer un filtrado por precio mínimo y máximo. Al igual que en filtrar marca y año, aprovechando el encadenamiento, añadimos más métodos **_filter_** a la función **_filtrarAuto()_**:
+
+```javascript
+function filtrarVehiculos() {
+  const resultado = vehiculos
+    .filter(filtrarMarca)
+    .filter(filtrarYear)
+    .filter(filtrarMinimo)
+    .filter(filtrarMaximo);
+
+  mostrarVehiculos(resultado);
+}
+```
+
+Llamamos a la función en su evento correspondiente:
+
+```javascript
+minimo.addEventListener("change", (e) => {
+  datosBusqueda.minimo = e.target.value;
+  filtrarVehiculos();
+});
+maximo.addEventListener("change", (e) => {
+  datosBusqueda.maximo = e.target.value;
+  filtrarVehiculos();
+});
+```
+
+Creamos las funciones filtrarMinimo y filtrarMáximo:
+
+```javascript
+function filtrarMinimo(vehiculo) {
+  const { minimo } = datosBusqueda;
+  if (minimo) {
+    return vehiculo.precio >= minimo;
+  }
+  return vehiculo;
+}
+
+function filtrarMaximo(vehiculo) {
+  const { maximo } = datosBusqueda;
+  if (maximo) {
+    return vehiculo.precio <= maximo;
+  }
+  return vehiculo;
+}
+```
+
+Aquí debemos fijarnos en que al contrario que en filtrar Marca y Año, no estamos comparando con su misma propiedad. En el caso de mínimo queremos que nos filtre los vehículos cuyo precio sea superior a la cantidad mínima introducida por el usuario y en el caso de máximo queremos filtrar por aquellos vehículos cuyo precio sea inferior a la cantidad máxima introducida por el usuario. Es decir, estamos comparando precio con valores mínimos y máximos.
+
+Hay que tener en cuenta que en este caso no es necesario la conversión del tipo de dato por el comportamiento de los ***operadores mayor o igual (>=) y menor o igual (<=)***.
+
 

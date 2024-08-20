@@ -214,7 +214,7 @@ function limpiarHTML() {
 
 Ahora, ya vemos como el HTML se actualiza de forma dinámica cada vez que modificamos un campo.
 
-## Filtrar por precio
+## Séptimo paso: Filtrar por precio
 
 En este punto vamos a hacer un filtrado por precio mínimo y máximo. Al igual que en filtrar marca y año, aprovechando el encadenamiento, añadimos más métodos **_filter_** a la función **_filtrarAuto()_**:
 
@@ -265,6 +265,71 @@ function filtrarMaximo(vehiculo) {
 
 Aquí debemos fijarnos en que al contrario que en filtrar Marca y Año, no estamos comparando con su misma propiedad. En el caso de mínimo queremos que nos filtre los vehículos cuyo precio sea superior a la cantidad mínima introducida por el usuario y en el caso de máximo queremos filtrar por aquellos vehículos cuyo precio sea inferior a la cantidad máxima introducida por el usuario. Es decir, estamos comparando precio con valores mínimos y máximos.
 
-Hay que tener en cuenta que en este caso no es necesario la conversión del tipo de dato por el comportamiento de los ***operadores mayor o igual (>=) y menor o igual (<=)***.
+Hay que tener en cuenta que en este caso no es necesario la conversión del tipo de dato por el comportamiento de los **_operadores mayor o igual (>=) y menor o igual (<=)_**.
 
+## Octavo paso: resto de filtros.
+
+Este paso no tiene ningún misterio, ya que es hacer exactamente lo mismo que hemos hecho en el filtrado por marca para el tipo de transmisión y el color y año en el caso de las puertas.
+
+Encadenamos los filtros que restan:
+
+```javascript
+function filtrarVehiculos() {
+  const resultado = vehiculos
+    .filter(filtrarMarca)
+    .filter(filtrarYear)
+    .filter(filtrarMinimo)
+    .filter(filtrarMaximo)
+    .filter(filtrarPuertas)
+    .filter(filtrarTransmision)
+    .filter(filtrarColor);
+
+  mostrarVehiculos(resultado);
+}
+```
+
+Llamamos a la función en cada uno de los eventos:
+
+```javascript
+puertas.addEventListener("change", (e) => {
+  datosBusqueda.puertas = parseInt(e.target.value);
+  filtrarVehiculos();
+});
+transmision.addEventListener("change", (e) => {
+  datosBusqueda.transmision = e.target.value;
+  filtrarVehiculos();
+});
+color.addEventListener("change", (e) => {
+  datosBusqueda.color = e.target.value;
+  filtrarVehiculos();
+});
+```
+
+Recuerda convertir a número entero el valor de puertas del objeto para que nos filtre correctamente.
+
+Creamos las funciones filtrarPuertas, filtrarTransmision y filtrarColor
+
+```javascript
+function filtrarPuertas(vehiculo) {
+  const { puertas } = datosBusqueda;
+  if (puertas) {
+    return vehiculo.puertas === puertas;
+  }
+  return vehiculo;
+}
+function filtrarTransmision(vehiculo) {
+  const { transmision } = datosBusqueda;
+  if (transmision) {
+    return vehiculo.transmision === transmision;
+  }
+  return vehiculo;
+}
+function filtrarColor(vehiculo) {
+  const { color } = datosBusqueda;
+  if (color) {
+    return vehiculo.color === color;
+  }
+  return vehiculo;
+}
+```
 

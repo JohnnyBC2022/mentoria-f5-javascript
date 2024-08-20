@@ -71,3 +71,47 @@ function llenarSelect() {
   }
 }
 ```
+
+## Tercer paso: Leer el valor de los campos seleccionados por el usuario:
+
+Vamos a generar un objeto que contenga los datos de los campos que haya seleccionado el usuario y que inicialmente estará vacío:
+
+```javascript
+const datosBusqueda = {
+  marca: "",
+  year: "",
+  minimo: "",
+  maximo: "",
+  puertas: "",
+  transmision: "",
+  color: "",
+};
+```
+
+y vamos a crear un evento de escucha para cada uno de los valores seleccionados:
+
+```javascript
+marca.addEventListener("change", (e) => {
+  datosBusqueda.marca = e.target.value;
+});
+year.addEventListener("change", (e) => {
+  datosBusqueda.year = e.target.value;
+});
+minimo.addEventListener("change", (e) => {
+  datosBusqueda.minimo = e.target.value;
+});
+maximo.addEventListener("change", (e) => {
+  datosBusqueda.maximo = e.target.value;
+});
+puertas.addEventListener("change", (e) => {
+  datosBusqueda.puertas = e.target.value;
+});
+transmision.addEventListener("change", (e) => {
+  datosBusqueda.transmision = e.target.value;
+});
+color.addEventListener("change", (e) => {
+  datosBusqueda.color = e.target.value;
+});
+```
+
+

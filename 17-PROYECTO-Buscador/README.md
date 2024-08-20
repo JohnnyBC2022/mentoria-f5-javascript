@@ -114,4 +114,34 @@ color.addEventListener("change", (e) => {
 });
 ```
 
+## Cuarto paso: filtrado por marca
+
+Dentro del evento de marca, una vez leído el valor, vamos a llamar a una función que nos va a filtrar los vehículos:
+
+```javascript
+marca.addEventListener("change", (e) => {
+  datosBusqueda.marca = e.target.value;
+  filtrarVehiculo();
+});
+```
+
+Vamos a crear esta función filtrado de vehículos que va a llamar a otra función que se encargará de filtrar por marca.
+
+```javascript
+function filtrarVehiculos() {
+  const resultado = vehiculos.filter(filtrarMarca);
+  console.log(resultado);
+}
+
+function filtrarMarca(vehiculo) {
+  const { marca } = datosBusqueda;
+  if (marca) {
+    return vehiculo.marca === marca;
+  }
+  return vehiculo;
+}
+```
+
+Filtrar vehículos va a hacer distintos filtrados que por el momento solo ejecuta el filtrado por marca, si la marca del vehículo coincide con la marca que el usuario ha seleccionado en los datos de búsqueda, es decir, si está presente en ese objeto, entonces la función retornará ese valor.
+
 

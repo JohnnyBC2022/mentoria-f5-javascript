@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Eventos para los selectores de búsqueda
 marca.addEventListener('change', e=>{
     datosBusqueda.marca = e.target.value;
+    filtrarVehiculos();
 });
 year.addEventListener('change', e=>{
     datosBusqueda.year = e.target.value;
@@ -79,3 +80,17 @@ function llenarSelect() {
     }
 }
 
+//Función que filtra en base a la búsqueda
+function filtrarVehiculos() {
+    const resultado = vehiculos.filter( filtrarMarca );
+
+    console.log(resultado);
+}
+
+function filtrarMarca(vehiculo) {
+    const {marca} = datosBusqueda;
+    if(marca){
+        return vehiculo.marca === marca;
+    }
+    return vehiculo;
+}

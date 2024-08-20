@@ -144,4 +144,39 @@ function filtrarMarca(vehiculo) {
 
 Filtrar vehículos va a hacer distintos filtrados que por el momento solo ejecuta el filtrado por marca, si la marca del vehículo coincide con la marca que el usuario ha seleccionado en los datos de búsqueda, es decir, si está presente en ese objeto, entonces la función retornará ese valor.
 
+## Quinto paso: filtrado por año
+
+Gracias al encadenamiento, podemos añadir a la función filtrarVehículos el filtrado por año:
+
+```javascript
+function filtrarVehiculos() {
+  const resultado = vehiculos.filter(filtrarMarca).filter(filtrarYear);
+
+  console.log(resultado);
+}
+```
+
+En este punto observamos, que resultado va a hacer un primer filtro llamando a la función **_filtrarMarca_** y sobre este resultado llamar a la función **_filtrarYear_** y para comprobarlo, mostramos el resultado por la consola.
+
+A continuación, crearemos la función **_filtrarYear_** que es idéntica a la anterior:
+
+```javascript
+function filtrarYear(vehiculo) {
+  const { year } = datosBusqueda;
+  if (year) {
+    return vehiculo.year === year;
+  }
+  return vehiculo;
+}
+```
+
+Hay que tener en cuenta que este filtrado nos va a devolver un array vacío y es porque el dato **_vehiculo.year_** en nuestra base de datos, está almacenado en forma de **_número_**, pero el valor que leemos cuando el usuario selecciona este campo es de tipo **_string_**, por lo tanto nunca va a encontrar las coincidencias (recuerda el operador estricto ===). Para solucionarlo, podemos convertir el valor del dato introducido en un número entero y así ya funcionará este filtrado. Podemos hacerlo en la función filtrarYear o en el evento de escucha de ese valor. Yo lo he hecho ahí:
+
+```javascript
+year.addEventListener("change", (e) => {
+  datosBusqueda.year = parseInt(e.target.value);
+  filtrarVehiculos();
+});
+```
+
 

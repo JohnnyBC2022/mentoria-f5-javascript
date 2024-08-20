@@ -333,3 +333,31 @@ function filtrarColor(vehiculo) {
 }
 ```
 
+## Noveno paso: mostrar mensaje si no se encuentran resultados.
+
+Para acabar el proyecto, vamos a mostrar por pantalla un mensaje de alerta que indique al usuario que no se han encontrado vehículos con los campos que ha seleccionado, para ello. Si el filtrado de vehículos no encuentra nada, ejecutaremos una función que vamos a llamar **_sinResultados()_**
+
+```javascript
+if (!resultado.length) {
+  sinResultados();
+  return;
+}
+```
+
+En este caso, mediante la propiedad length, estamos verificando la longitud del array resultado, si resultado es un arreglo vacío, resultado.length será 0. Es decir, resultado.lenght devuelve true si el array contiene elementos y false cuando esté vacío. A nosotros nos interesa ejecutar la función sinResultados cuando resultado.length sea 0. Recordad que la sentencia de control IF va a ejecutar las instrucciones cuando sea true y por eso aplicamos el operarador de negación para hacer que el false que devuelve la evaluación resultado.length cuando es 0 se convierta en true.
+
+Creamos la función sinResultados, pero hay que acordarse de llamar a la función limpiarHTML, para que elimine el HTML previo:
+
+```javascript
+function sinResultados() {
+  limpiarHTML();
+  const sinResultadosDiv = document.createElement("DIV");
+  sinResultadosDiv.classList.add("alerta", "error");
+  sinResultadosDiv.textContent =
+    "No se han encontrado vehículos con esos parámetros de búsqueda.";
+  resultado.appendChild(sinResultadosDiv);
+}
+```
+
+Y con esto ya tenemos un buscador que aplica un filtrado por campos múltiples de forma dinámica.
+

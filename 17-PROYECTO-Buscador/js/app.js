@@ -106,7 +106,21 @@ function filtrarVehiculos() {
         .filter(filtrarTransmision)
         .filter(filtrarColor);
 
+
+    if (!resultado.length) {
+        sinResultados();
+        return;
+    }
+    
     mostrarVehiculos(resultado);
+}
+
+function sinResultados() {
+    limpiarHTML();
+    const sinResultadosDiv = document.createElement('DIV');
+    sinResultadosDiv.classList.add('alerta','error')
+    sinResultadosDiv.textContent = 'No se han encontrado vehículos con esos parámetros de búsqueda.'
+    resultado.appendChild(sinResultadosDiv)
 }
 
 function filtrarMarca(vehiculo) {

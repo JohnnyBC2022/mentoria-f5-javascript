@@ -1,0 +1,90 @@
+:root {
+  --black: #0f0f0f;
+  --white: #f8f8f8;
+  --lightgrey: #e1e1e1;
+  --red: #a8201a;
+  --myfont: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background: rgb(64, 145, 108);
+  background: linear-gradient(
+    90deg,
+    rgba(64, 145, 108, 1) 0%,
+    rgba(116, 198, 157, 1) 50%,
+    rgba(149, 213, 178, 1) 100%
+  );
+}
+
+h1 {
+    font-family: sans-serif;
+  font-size: 6rem;
+  padding: 3rem 0;
+  margin: 0;
+}
+
+.contenedor {
+  background-color: var(--white);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+p {
+  font-size: 2rem;
+}
+
+h1,
+p {
+  text-align: center;
+}
+
+form {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem;
+  background: var(--white);
+  margin-bottom: 10rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+#app p {
+  text-align: left !important;
+  font-size: 2rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+#resultado p {
+  margin: 0;
+  padding: 2rem;
+  border-bottom: 1px solid var(--lightgrey);
+}
+#resultado p span {
+  font-weight: bold;
+}
+#resultado p:last-of-type {
+  border: none;
+}
+.alerta {
+  padding: 1rem;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--white);
+  font-size: 2rem;
+}
+.error {
+  background-color: var(--red);
+}
+
+.sitio-web {
+  color: var(--white);
+  display: block;
+  font-size: 4rem;
+  max-width: 1200px;
+  margin: 2rem auto;
+  text-decoration: none;
+}
+.sitio-web:hover {
+  color: var(--red);
+}

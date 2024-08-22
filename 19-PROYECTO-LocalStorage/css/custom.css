@@ -20,7 +20,7 @@ h1, h2 {
 }
 
 .error {
-    background-color: red;
+    background-color: crimson;
     text-align: center;
     padding: 10px;
     text-transform: uppercase;

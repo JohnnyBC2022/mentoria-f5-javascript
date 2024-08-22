@@ -1,0 +1,31 @@
+body{
+    background: rgb(64,145,108);
+background: linear-gradient(90deg, rgba(64,145,108) 0%, rgba(116,198,157,1) 20%, rgba(149,213,178,1) 100%)
+}
+
+h1, h2 {
+    text-align: center;
+    color: rgb(15, 33, 25);
+}
+
+#contenido {
+    margin-top: 40px;
+}
+.borrar-post,
+.borrar-post:hover {
+    float: right;
+    cursor: pointer;
+    color: red;
+    font-weight: bold;
+}
+
+.error {
+    background-color: red;
+    text-align: center;
+    padding: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    max-width: 400px;
+    margin: 0 auto;
+    color: white;
+}

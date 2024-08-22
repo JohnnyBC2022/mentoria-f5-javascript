@@ -71,3 +71,104 @@ function mostrarError(error) {
   }
 }
 ```
+
+## Tercer paso: mostrar la publicación en el HTML.
+
+Cada vez que el usuario escriba una publicación, debe añadirse al **_array post_** que habíamos declarado e inicializado como vacío al principio. Ese array lo vamos a ir llenando con cada una de las publicaciones que el usuario usando un objeto que tendrá un id y el texto introducido.
+
+```javascript
+const postObj = {
+  id: Date.now(),
+  post, // recuerda que es igual que poner post: post cuando los nombres de la llave y el valor son iguales
+};
+```
+
+Una forma sencilla de tener un identificador único es apoyarse en el método **_now()_** que veremos en más detalle próximamente.
+
+Mediante el **_Spread operator_** haremos una copia de las publicaciones anteriores y le añadimos la nueva publicación:
+
+```javascript
+posts = [...posts, postObj];
+```
+
+Y ahora crearemos una función para que nos genere el HTML con las publicaciones del usuario.
+
+```javascript
+function crearHTML(postObj) {
+  if (posts.length > 0) {
+    posts.forEach((post) => {
+      // Crear el HTML
+      const li = document.createElement("LI");
+      // añadir el texto
+      li.innerText = post.post;
+      // inyectarlo en el HTML
+      listaPosts.appendChild(li);
+    });
+  }
+}
+```
+
+Como queremos que se añada la lista de publicaciones si contiene algún elemento, hacemos es validación, iteramos sobre nuestro array, creamos un elemento **_LI_** para cada publicación, en el elemento le asignamos el texto que está en el objeto y lo "pintamos" en el elemento **_listaPosts_** que habíamos declarado en nuestras variables.
+
+Recuerda que al usar appendChild, debemos limpiar el HTML previo para evitar que nos duplique código HTML, así que crearemos la función para limpiar el HTML que ya hemos visto en anteriores proyectos:
+
+```javascript
+function limpiarHTML() {
+  while (listaPosts.firstChild) {
+    listaPosts.removeChild(listaPosts.firstChild);
+  }
+}
+```
+
+Y llamamos a esta función antes de crear el HTML:
+
+```javascript
+function crearHTML(postObj) {
+    limpiarHTML();
+    if(posts.length > 0) {
+```
+
+Y para mejorar la experiencia del usuario, vamos a limpiar el formulario cada vez que hagamos una nueva publicación, reiniciaremos el formulario usando el método reset():
+
+```javascript
+formulario.reset();
+```
+
+## Cuarto paso: Guardar en el almacenamiento local (Local Storage)
+
+En este punto, vemos que la aplicación funciona correctamente, pero si recargamos la pestaña del navegador, la información se pierde. Es ahí donde entra en juego **_Local Storage_**
+
+Cuando creamos el HTML de las publicaciones vamos a llamar a una función que vamos a llamar enviarAlStorage y que vamos a crear a continuación:
+
+```javascript
+function enviarAlStorage() {
+  localStorage.setItem("publicaciones", JSON.stringify(posts));
+}
+```
+
+Esta función es sencilla, para guardar las publicaciones en el almacenamiento local, usamos el método **_setItem_** le asignamos un nombre, y le pasamos la información de nuestros posts convertido en **_String_**
+
+Ahora si recargamos el navegador, siguen sin aparecer las publicaciones, pero si abrimos las herramientas de desarrollador y vamos a la pestaña memoria (yo uso FireFox) veremos nuestro Item "Publicaciones" ahí:
+
+<img src="./img/captura1.png">
+
+Para mostrar el HTML de nuestras publicaciones cuando el elemento se carga vamos a añadir un nuevo evento de escucha que se inicie al principio y ahí obtendremos las publicaciones que están almacenadas en **_Local Storage_**
+
+```javascript
+document.addEventListener("DOMContentLoaded", () => {
+  posts = JSON.parse(localStorage.getItem("publicaciones")) || [];
+  crearHTML();
+});
+```
+
+En este punto lo que hacemos es obtener el Item "publicaciones" mediante el método **_getItem_**, como se almacena en forma de string, debemos convertirlo a un objeto JSON, y para ello usamos **_parse_**.
+
+Es importante tener en cuenta que si eliminamos el contenido del localStorage, y mostramos los posts en la consola, nos va a decir que su valor es "null". Si invocamos la función **_crearHTML()_** este null nos provocará un fallo, ya que en la validación de la función:
+
+```javascript
+function crearHTML(postObj) {
+    limpiarHTML();
+    if(posts.length > 0) {
+```
+
+No existe un método length para datos de tipo null, es un método de arrays.

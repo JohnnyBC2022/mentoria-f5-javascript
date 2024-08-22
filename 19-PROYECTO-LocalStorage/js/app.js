@@ -6,7 +6,14 @@ let posts = [];
 eventListeners()
 // Event Listeners
 function eventListeners() {
+    // Cuando el usuario agrega una nueva publicación
     formulario.addEventListener('submit', nuevoPost);
+
+    // Cuando el documento HTML está listo
+    document.addEventListener('DOMContentLoaded', () => {
+        posts = JSON.parse(localStorage.getItem('publicaciones')) || [];
+        crearHTML();
+    })
 }
 
 //Funciones
@@ -21,6 +28,20 @@ function nuevoPost(e) {
         mostrarError('La publicación no puede ir vacía');
         return; //evita que se ejecuten más líneas de código
     }
+
+    const postObj = {
+        id: Date.now(),
+        post // recuerda que es igual que poner post: post cuando los nombres de la llave y el valor son iguales
+    }
+
+    // Añadir al array de publicaciones
+    posts = [...posts, postObj];
+    
+    // Una vez añadida la publicación, crearemos su html
+    crearHTML();
+
+    // Reiniciar el formulario
+    formulario.reset();
 }
 
 
@@ -43,4 +64,34 @@ function mostrarError(error) {
             mensajeError.remove();
         }, 3000);
     }
+}
+
+// Muestra una lista de las publicaciones
+function crearHTML(postObj) {
+    limpiarHTML();
+    if(posts.length > 0) {
+        posts.forEach(post =>{
+            // Crear el HTML
+            const li = document.createElement('LI');
+            // añadir el texto
+            li.innerText = post.post;
+            // inyectarlo en el HTML
+            listaPosts.appendChild(li);
+
+        })
+    }
+
+    enviarAlStorage();
+}
+
+// Limpiar el HTML previo
+function limpiarHTML() {
+    while (listaPosts.firstChild) {
+        listaPosts.removeChild(listaPosts.firstChild)
+    }
+}
+
+// Guarda las publicaciones en el LocalStorage
+function enviarAlStorage() {
+    localStorage.setItem('publicaciones', JSON.stringify(posts))
 }

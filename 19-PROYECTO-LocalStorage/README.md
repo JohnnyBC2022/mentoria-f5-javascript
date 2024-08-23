@@ -172,3 +172,44 @@ function crearHTML(postObj) {
 ```
 
 No existe un método length para datos de tipo null, es un método de arrays.
+
+## Quinto paso: Eliminar publicación del almacenamiento local
+
+Cuando creamos el HTML que muestra el listado de las publicaciones, vamos a añadir un botón de forma dinámica para cada una de las publicaciones en la función **_crearHTML()_**:
+
+```javascript
+const btnBorrar = document.createElement("A");
+btnBorrar.classList.add("borrar-post");
+btnBorrar.innerText = "X";
+```
+
+Para repasar, vamos a añadir un poco de estilo para separar el botón de la publicación:
+
+```javascript
+li.style.display = "flex";
+li.style.gap = "10px";
+```
+
+Inyectamos ese botón en el HTML:
+
+```javascript
+li.appendChild(btnBorrar);
+```
+
+Ahora, le tenemos que añadir la funcionalidad a ese botón, para ello, vamos a hacer que cuando el usuario haga click en ese botón, se ejecute la función **_borrarPost()_** y como debe identificar que publicación estamos tratando de eliminar, le tenemos que pasar su id:
+
+```javascript
+btnBorrar.onclick = () => {
+  borrarPost(post.id);
+};
+```
+
+Para finalizar, creamos la función **_borrarPost_**
+
+```javascript
+function borrarPost(id) {
+  posts = posts.filter((post) => post.id !== id);
+  crearHTML();
+}
+```
+Una forma sencilla de eliminar es usando el método de arrays filter, en el cual reasignamos el valor del array ***posts***, filtrando por aquellos cuyo id sea distinto al id que le acabamos de pasar cuando hacemos click en cada una de las funciones y para que nos actualize el listado en el HTML, llamamos de nuevo a la función ***crearHTML()***.

@@ -13,9 +13,8 @@ h1, h2 {
 }
 .borrar-post,
 .borrar-post:hover {
-    float: right;
     cursor: pointer;
-    color: red;
+    color: crimson;
     font-weight: bold;
 }
 

@@ -36,7 +36,7 @@ function nuevoPost(e) {
 
     // Añadir al array de publicaciones
     posts = [...posts, postObj];
-    
+
     // Una vez añadida la publicación, crearemos su html
     crearHTML();
 
@@ -69,12 +69,27 @@ function mostrarError(error) {
 // Muestra una lista de las publicaciones
 function crearHTML(postObj) {
     limpiarHTML();
-    if(posts.length > 0) {
-        posts.forEach(post =>{
+    if (posts.length > 0) {
+        posts.forEach(post => {
+            // Agregar un botón para eliminar los posts
+            const btnBorrar = document.createElement('A');
+            btnBorrar.classList.add('borrar-post');
+            btnBorrar.innerText = 'X';
+
+            // Añadir la función de eliminar
+            btnBorrar.onclick = () => {
+                borrarPost(post.id);
+            }
+
             // Crear el HTML
             const li = document.createElement('LI');
+            li.style.display = 'flex';
+            li.style.gap = '10px';
             // añadir el texto
             li.innerText = post.post;
+
+            // Asignar el botón de eliminar
+            li.appendChild(btnBorrar);
             // inyectarlo en el HTML
             listaPosts.appendChild(li);
 
@@ -94,4 +109,9 @@ function limpiarHTML() {
 // Guarda las publicaciones en el LocalStorage
 function enviarAlStorage() {
     localStorage.setItem('publicaciones', JSON.stringify(posts))
+}
+
+function borrarPost(id) {
+    posts = posts.filter(post => post.id !== id);
+    crearHTML()
 }

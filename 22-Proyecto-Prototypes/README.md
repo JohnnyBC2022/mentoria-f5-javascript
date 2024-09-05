@@ -147,3 +147,23 @@ function mostrarMensaje(mensaje, tipo) {
   }, 3000);
 }
 ```
+
+### Noveno paso: Mejora en la validación del formulario
+
+Hemos mejorado la validación del formulario para que, en caso de campos vacíos, se muestre un mensaje de error y se detenga la ejecución de la función. Esta mejora asegura que la función `calcularSeguro` no continúe si hay campos obligatorios vacíos y si el usuario ha rellenado todos los campos correctamente, no se ejecute ese código.
+
+```javascript
+function calcularSeguro(e) {
+  e.preventDefault();
+  const marca = document.querySelector("#marca").value;
+  const year = document.querySelector("#year").value;
+  const tipo = document.querySelector('input[name="tipo"]:checked').value;
+
+  if (marca === "" || year === "" || tipo === "") {
+    ui.mostrarMensaje("Todos los campos son obligatorios", "error");
+    return;
+  }
+
+  console.log("calculando...");
+}
+```

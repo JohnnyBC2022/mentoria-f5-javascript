@@ -69,8 +69,8 @@ function calcularSeguro(e) {
     const tipo = document.querySelector('input[name="tipo"]:checked').value;
 
     if(marca === '' || year === '' || tipo === ''){
-        ui.mostrarMensaje('Todos los campos son obligatorios', 'error')
-    } else {
-        console.log('pasa')
+        ui.mostrarMensaje('Todos los campos son obligatorios', 'error');
+        return;
     }
+    console.log('calculando...')
 }

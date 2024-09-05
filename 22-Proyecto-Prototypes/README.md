@@ -21,3 +21,39 @@ function Seguro(marca, year, tipo) {
 
 function UI() {}
 ```
+
+## Segundo paso: Añadiendo el primer prototype
+
+Ahora, vamos a añadir el primer **prototype** para la clase `UI`. Este prototype será responsable de rellenar el desplegable de años en el formulario.
+
+```javascript
+UI.prototype.rellenarOpciones = () => {
+  const max = new Date().getFullYear(),
+    min = max - 20;
+
+  const selectYear = document.querySelector("#year");
+
+  for (let i = max; i > min; i--) {
+    let option = document.createElement("option");
+    option.value = i;
+    option.textContent = i;
+    selectYear.appendChild(option);
+  }
+};
+```
+
+Este código crea un prototype **_rellenarOpciones_** para la clase UI, que genera y añade opciones de años al desplegable en el formulario, desde el año actual hasta 20 años atrás.
+
+## Tercer paso: Inicialización y carga de opciones
+
+En este paso, vamos a inicializar una instancia de la clase `UI` y a utilizar el prototype `rellenarOpciones` cuando el contenido del DOM esté completamente cargado.
+
+```javascript
+const ui = new UI();
+
+document.addEventListener("DOMContentLoaded", () => {
+  ui.rellenarOpciones();
+});
+```
+
+

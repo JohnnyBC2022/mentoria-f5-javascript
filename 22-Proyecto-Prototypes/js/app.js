@@ -72,5 +72,5 @@ function calcularSeguro(e) {
         ui.mostrarMensaje('Todos los campos son obligatorios', 'error');
         return;
     }
-    console.log('calculando...')
+    ui.mostrarMensaje('Calculando...', 'correcto');
 }

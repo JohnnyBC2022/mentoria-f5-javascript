@@ -148,9 +148,11 @@ function mostrarMensaje(mensaje, tipo) {
 }
 ```
 
-### Noveno paso: Mejora en la validación del formulario
+### Noveno paso: Mejora en la validación del formulario y mostrar mensaje de éxito.
 
 Hemos mejorado la validación del formulario para que, en caso de campos vacíos, se muestre un mensaje de error y se detenga la ejecución de la función. Esta mejora asegura que la función `calcularSeguro` no continúe si hay campos obligatorios vacíos y si el usuario ha rellenado todos los campos correctamente, no se ejecute ese código.
+
+Además, podemos reutilizar la función `mostrarMensaje` para que nos muestre el mensaje que queramos cuando la validación sea correcta.
 
 ```javascript
 function calcularSeguro(e) {
@@ -163,7 +165,6 @@ function calcularSeguro(e) {
     ui.mostrarMensaje("Todos los campos son obligatorios", "error");
     return;
   }
-
-  console.log("calculando...");
+  ui.mostrarMensaje('Calculando...', 'correcto');
 }
 ```

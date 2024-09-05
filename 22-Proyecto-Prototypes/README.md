@@ -107,26 +107,43 @@ UI.prototype.mostrarMensaje = (mensaje, tipo) => {
   formulario.insertBefore(div, document.querySelector("#resultado"));
 };
 ```
+
 ## Séptimo paso: Modificamos calcular seguro para mostrar mensajes de error
 
 En esta sección, lo que tenemos que hacer para que se muestre el mensaje de error es llamar a la función `mostrarMensaje` de UI y le pasamos como parámetros el mensaje que queramos que se muestre el tipo de mensaje.
 
 ```javascript
 function calcularSeguro(e) {
-    e.preventDefault();
-
-    // Leer la marca seleccionada
-    const marca = document.querySelector('#marca').value;
-    // Leer el año seleccionado
-    const year = document.querySelector('#year').value;
-    // Leer el tipo de cobertura
-    const tipo = document.querySelector('input[name="tipo"]:checked').value;
-
-    if (marca === '' || year === '' || tipo === '') {
-        // Mostrar mensaje de error si algún campo está vacío
-        ui.mostrarMensaje('Todos los campos son obligatorios', 'error');
-    } else {
-        // Si todos los campos están completos, se puede continuar con el cálculo
-        console.log('pasa');
-    }
+  e.preventDefault();
+  const marca = document.querySelector("#marca").value;
+  const year = document.querySelector("#year").value;
+  const tipo = document.querySelector('input[name="tipo"]:checked').value;
+  if (marca === "" || year === "" || tipo === "") {
+    ui.mostrarMensaje("Todos los campos son obligatorios", "error");
+  } else {
+    console.log("pasa");
+  }
 }
+```
+
+### Octavo paso: Eliminar mensajes después de un tiempo
+
+Para mejorar la experiencia del usuario, vamos a eliminar el mensaje de error o éxito después de un breve período de tiempo. Esto se logra utilizando `setTimeout`.
+
+```javascript
+function mostrarMensaje(mensaje, tipo) {
+  const div = document.createElement("div");
+  if (tipo === "error") {
+    div.classList.add("error");
+  } else {
+    div.classList.add("correcto");
+  }
+  div.classList.add("mensaje", "mt-10");
+  div.textContent = mensaje;
+  const formulario = document.querySelector("#calcular-seguro");
+  formulario.insertBefore(div, document.querySelector("#resultado"));
+  setTimeout(() => {
+    div.remove();
+  }, 3000);
+}
+```

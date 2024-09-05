@@ -37,6 +37,10 @@ UI.prototype.mostrarMensaje = (mensaje, tipo)=>{
     // Insertar en el HTML
     const formulario = document.querySelector('#calcular-seguro'); // podríamos dejar esta variable como global, pero no pasa nada por tenerla otra vez
     formulario.insertBefore(div, document.querySelector('#resultado'));
+
+    setTimeout(() => {
+        div.remove();
+    }, 3000);
 }
 
 

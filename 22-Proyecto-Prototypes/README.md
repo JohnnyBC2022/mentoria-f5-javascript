@@ -56,4 +56,35 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 ```
 
+## Cuarto paso: Validación del formulario y cálculo del seguro
 
+En este paso, vamos a añadir un evento al formulario para validar y calcular el seguro cuando se envíe.
+
+Primero, definimos una función `eventListeners` que se encarga de añadir un evento de escucha al formulario (podríamos hacerlo con un prototype también, pero en este caso agrega una dificultad innecesaria):
+
+```javascript
+function eventListeners() {
+  const formulario = document.querySelector("#calcular-seguro");
+  formulario.addEventListener("submit", calcularSeguro);
+}
+```
+
+## Quinto paso: Validación del formulario y cálculo del seguro
+
+En este paso, vamos a implementar la función `calcularSeguro` que valida la información del formulario antes de proceder con el cálculo del seguro.
+
+```javascript
+function calcularSeguro(e) {
+  e.preventDefault();
+  const marca = document.querySelector("#marca").value;
+  const year = document.querySelector("#year").value;
+  const tipo = document.querySelector('input[name="tipo"]:checked').value;
+  if (marca === "" || year === "" || tipo === "") {
+    console.log("no pasa la validación");
+  } else {
+    console.log("pasa la validación");
+  }
+}
+```
+
+Si algún campo está vacío, se muestra un mensaje `no pasa la validación` en la consola. Si todos los campos tienen valor, se muestra `pasa la validación`

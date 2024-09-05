@@ -22,6 +22,24 @@ UI.prototype.rellenarOpciones = () => {
     }
 }
 
+// Prototype que va a mostrar alertas en pantalla
+UI.prototype.mostrarMensaje = (mensaje, tipo)=>{
+    const div = document.createElement('div');
+
+    if(tipo === 'error') {
+        div.classList.add('error');
+    } else {
+        div.classList.add('correcto')
+    }
+    div.classList.add('mensaje', 'mt-10');
+    div.textContent = mensaje;
+
+    // Insertar en el HTML
+    const formulario = document.querySelector('#calcular-seguro'); // podríamos dejar esta variable como global, pero no pasa nada por tenerla otra vez
+    formulario.insertBefore(div, document.querySelector('#resultado'));
+}
+
+
 // Instanciar UI
 const ui = new UI();
 
@@ -47,7 +65,7 @@ function calcularSeguro(e) {
     const tipo = document.querySelector('input[name="tipo"]:checked').value;
 
     if(marca === '' || year === '' || tipo === ''){
-        console.log('no pasa')
+        ui.mostrarMensaje('Todos los campos son obligatorios', 'error')
     } else {
         console.log('pasa')
     }

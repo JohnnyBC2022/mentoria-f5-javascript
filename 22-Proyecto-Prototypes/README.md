@@ -87,4 +87,46 @@ function calcularSeguro(e) {
 }
 ```
 
-Si algún campo está vacío, se muestra un mensaje `no pasa la validación` en la consola. Si todos los campos tienen valor, se muestra `pasa la validación`
+Si algún campo está vacío, se muestra un mensaje `no pasa la validación` en la consola. Si todos los campos tienen valor, se muestra `pasa la validación`.
+
+## Sexto paso: Mostrar mensajes al usuario
+
+Vamos a añadir una función para mostrar mensajes al usuario, ya sea de error o de éxito. Esta función se encargará de crear y mostrar un mensaje en la interfaz de usuario.
+
+```javascript
+UI.prototype.mostrarMensaje = (mensaje, tipo) => {
+  const div = document.createElement("div");
+  if (tipo === "error") {
+    div.classList.add("error");
+  } else {
+    div.classList.add("correcto");
+  }
+  div.classList.add("mensaje", "mt-10");
+  div.textContent = mensaje;
+  const formulario = document.querySelector("#calcular-seguro");
+  formulario.insertBefore(div, document.querySelector("#resultado"));
+};
+```
+## Séptimo paso: Modificamos calcular seguro para mostrar mensajes de error
+
+En esta sección, lo que tenemos que hacer para que se muestre el mensaje de error es llamar a la función `mostrarMensaje` de UI y le pasamos como parámetros el mensaje que queramos que se muestre el tipo de mensaje.
+
+```javascript
+function calcularSeguro(e) {
+    e.preventDefault();
+
+    // Leer la marca seleccionada
+    const marca = document.querySelector('#marca').value;
+    // Leer el año seleccionado
+    const year = document.querySelector('#year').value;
+    // Leer el tipo de cobertura
+    const tipo = document.querySelector('input[name="tipo"]:checked').value;
+
+    if (marca === '' || year === '' || tipo === '') {
+        // Mostrar mensaje de error si algún campo está vacío
+        ui.mostrarMensaje('Todos los campos son obligatorios', 'error');
+    } else {
+        // Si todos los campos están completos, se puede continuar con el cálculo
+        console.log('pasa');
+    }
+}

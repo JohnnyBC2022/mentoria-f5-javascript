@@ -244,3 +244,31 @@ if (this.tipo === "basico") {
 }
 return cantidad;
 ```
+
+## Treceavo paso: Mostrar la cuota calculada en el HTML
+
+Una vez que hemos calculado el total de la cuota del seguro, lo mostraremos en el HTML. Para ello, creamos un nuevo método llamado **mostrarCuota** que genera dinámicamente el contenido HTML necesario.
+
+Como vamos a mostrar por pantalla la cantidad calculada de la cuota y utilizar los datos que el usuario ha introducido, debemos pasarle a la función esos parámetros.
+
+```javascript
+UI.prototype.mostrarCuota = (total, seguro) => {
+  const div = document.createElement("DIV");
+  div.classList.add("mt-10");
+  div.innerHTML = `
+        <p class="header">Tu cuota:</p>
+        <p class="font-bold">Total: ${total}€</p>
+    `;
+  const resultadoDiv = document.querySelector("#resultado");
+  resultadoDiv.appendChild(div);
+};
+```
+
+Ahora que tenemos el método **calcularSeguro** en el prototype del objeto `Seguro` y el método **mostrarCuota** en el prototype de `UI`, podemos calcular el total del seguro y mostrar el resultado en el HTML.
+
+```javascript
+const total = seguro.calcularSeguro();
+ui.mostrarCuota(total, seguro);
+```
+
+Con esto ya tendríamos todo lo que necesitamos y ya solo nos queda mejorar la experiencia de usuario.

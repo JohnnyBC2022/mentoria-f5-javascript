@@ -85,6 +85,21 @@ UI.prototype.mostrarMensaje = (mensaje, tipo) => {
     }, 3000);
 }
 
+UI.prototype.mostrarCuota = (total, seguro) => {
+    // Generar un div que muestre la cuota
+    const div = document.createElement('DIV');
+    div.classList.add('mt-10');
+
+    div.innerHTML = `
+        <p class="header">Tu cuota:</p>
+        <p class="font-bold">Total: ${total}€</p>
+    `;
+
+    const resultadoDiv = document.querySelector('#resultado');
+    resultadoDiv.appendChild(div)
+}
+
+
 
 // Instanciar UI
 const ui = new UI();
@@ -118,5 +133,8 @@ function calcularSeguro(e) {
 
     // Instanciar el seguro
     const seguro = new Seguro(marca, year, tipo);
-    seguro.calcularSeguro();
+    const total = seguro.calcularSeguro();
+
+    // Utilizar el prototype que realiza el cálculo de la cuota
+    ui.mostrarCuota(total, seguro)
 }

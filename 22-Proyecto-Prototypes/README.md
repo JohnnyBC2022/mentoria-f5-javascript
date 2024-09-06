@@ -271,4 +271,19 @@ const total = seguro.calcularSeguro();
 ui.mostrarCuota(total, seguro);
 ```
 
-Con esto ya tendríamos todo lo que necesitamos y ya solo nos queda mejorar la experiencia de usuario.
+Con esto ya tendríamos todo lo que necesitamos.
+
+## Catorceavo paso: Mostrar spinner y luego el resultado.
+
+Para mejorar la experiencia del usuario, vamos a mostrar un spinner de carga durante 3 segundos antes de mostrar el total del seguro calculado. Esto le da la impresión de que el cálculo está en proceso.
+
+```javascript
+const spinner = document.querySelector("#cargando");
+spinner.style.display = "block";
+setTimeout(() => {
+  spinner.remove();
+  resultadoDiv.appendChild(div);
+}, 3000);
+```
+
+Como podemos observar, en el HTML, teníamos el spinner creado, pero lo teníamos con una clase oculta, lo seleccionamos y le cambiamos su clase a ***block*** para que se muestre, a los 3 segundos eliminamos el spinner y mostramos el resultado.

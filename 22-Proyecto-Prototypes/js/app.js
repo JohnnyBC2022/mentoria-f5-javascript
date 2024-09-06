@@ -96,7 +96,16 @@ UI.prototype.mostrarCuota = (total, seguro) => {
     `;
 
     const resultadoDiv = document.querySelector('#resultado');
-    resultadoDiv.appendChild(div)
+    
+
+    // Mostrar el spinner
+    const spinner = document.querySelector('#cargando');
+    spinner.style.display = 'block';
+
+    setTimeout(() => {
+        spinner.remove(); // Se elimina el spinner y se muestra el resultado
+        resultadoDiv.appendChild(div);
+    }, 3000);
 }
 
 
@@ -136,5 +145,5 @@ function calcularSeguro(e) {
     const total = seguro.calcularSeguro();
 
     // Utilizar el prototype que realiza el cálculo de la cuota
-    ui.mostrarCuota(total, seguro)
+    ui.mostrarCuota(total, seguro);
 }

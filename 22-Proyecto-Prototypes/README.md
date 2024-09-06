@@ -178,7 +178,7 @@ console.log(seguro);
 
 Podemos comprobar que se reciben los datos correctamente en forma de objeto haciendo `console.log`.
 
-## Décimo paso: Método para calcular el seguro
+## Décimo paso: Método para calcular el seguro en función de la marca.
 
 Añadimos el método **calcularSeguro** al prototipo de **Seguro**. Este método se encargará de calcular el costo del seguro en base a la marca del vehículo. Vamos a necesitar una variable que almacene la cantidad y asumimos un precio base de 200 (puedes poner el que quieras), a partir de ahí, aplicamos diferentes multiplicadores según la marca seleccionada (puedes cambiarlos si lo deseas):
 
@@ -190,7 +190,7 @@ Seguro.prototype.calcularSeguro = function () {
     3 = Citroen 1.05
     */
   let cantidad;
-  const PRECIO_BASE = 200;
+  const PRECIO_BASE = 500;
   switch (this.marca) {
     case "1":
       cantidad = PRECIO_BASE * 1.2;
@@ -216,3 +216,14 @@ seguro.calcularSeguro();
 ```
 
 En este punto, podemos observar como nos calcula el precio del seguro en función de la marca escogida por el usuario en la consola del navegador.
+
+## Undécimo paso: Cálculo de la antigüedad del vehículo y ajuste del precio
+
+A continuación, se calcula la diferencia de años entre el año actual y el año seleccionado por el usuario. Este dato se utiliza para reducir el costo del seguro. Por cada año de antigüedad, el costo se reduce un 3%.
+
+```javascript
+const antiguedad = new Date().getFullYear() - this.year;
+cantidad -= (antiguedad * 3 * cantidad) / 100;
+// recuerda que es como poner:
+// cantidad = cantidad - ((antiguedad * 3) * cantidad) / 100
+```

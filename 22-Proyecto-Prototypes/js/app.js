@@ -6,28 +6,34 @@ function Seguro(marca, year, tipo) {
 }
 
 // Prototype asignado a Seguro que va a realizar el cálculo con los datos
-Seguro.prototype.calcularSeguro = function() {
+Seguro.prototype.calcularSeguro = function () {
     /*
     1 = Seat 1.20
     2 = Opel 1.10
     3 = Citroen 1.05
     */
-   let cantidad;
-   const PRECIO_BASE = 200;
-   switch (this.marca) {
-    case '1':
-        cantidad = PRECIO_BASE * 1.20;
-        break;
-    case '2':
-        cantidad = PRECIO_BASE * 1.10;
-        break;
-    case '3':
-        cantidad = PRECIO_BASE * 1.05;
-        break;
-    default:
-        break;
-   }
-   console.log(cantidad)
+    let cantidad;
+    const PRECIO_BASE = 500;
+    switch (this.marca) {
+        case '1':
+            cantidad = PRECIO_BASE * 1.20;
+            break;
+        case '2':
+            cantidad = PRECIO_BASE * 1.10;
+            break;
+        case '3':
+            cantidad = PRECIO_BASE * 1.05;
+            break;
+        default:
+            break;
+    }
+
+    // Calcular la diferencia de años entre el actual y el escogido por el usuario
+    const antiguedad = new Date().getFullYear() - this.year;
+
+    // Cada año de antigüedad, la cuota se va a reducir un 3%
+    cantidad -= ((antiguedad * 3) * cantidad) / 100;
+    console.log(cantidad)
 }
 
 function UI() { }
@@ -48,10 +54,10 @@ UI.prototype.rellenarOpciones = () => {
 }
 
 // Prototype que va a mostrar alertas en pantalla
-UI.prototype.mostrarMensaje = (mensaje, tipo)=>{
+UI.prototype.mostrarMensaje = (mensaje, tipo) => {
     const div = document.createElement('div');
 
-    if(tipo === 'error') {
+    if (tipo === 'error') {
         div.classList.add('error');
     } else {
         div.classList.add('correcto')
@@ -93,7 +99,7 @@ function calcularSeguro(e) {
     // Leer el tipo de cobertura
     const tipo = document.querySelector('input[name="tipo"]:checked').value;
 
-    if(marca === '' || year === '' || tipo === ''){
+    if (marca === '' || year === '' || tipo === '') {
         ui.mostrarMensaje('Todos los campos son obligatorios', 'error');
         return;
     }

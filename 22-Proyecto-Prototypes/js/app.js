@@ -168,7 +168,7 @@ function calcularSeguro(e) {
 
     // Instanciar el seguro
     const seguro = new Seguro(marca, year, tipo);
-    const total = seguro.calcularSeguro();
+    const total = seguro.calcularSeguro().toFixed(2);
 
     // Utilizar el prototype que realiza el cálculo de la cuota
     ui.mostrarCuota(total, seguro);

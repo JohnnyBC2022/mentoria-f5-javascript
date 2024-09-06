@@ -349,3 +349,9 @@ div.innerHTML = `
 ```
 
 Con todo esto ya tenemos el proyecto finalizado. Puedes añadir más marcas, un nuevo tipo de cobertura o un nuevo cálculo de la cuota en función de tipos de pago, si lo paga en efectivo, con tarjeta, si se fracciona o incluso añadir bonificaciones en función de la antigüedad si se renueva el seguro.
+
+> **Nota:** Formatea la cantidad total, para que muestre siempre 2 decimales.
+Añadimos al total el método toFixed():
+```javascript
+const total = seguro.calcularSeguro().toFixed(2);
+```

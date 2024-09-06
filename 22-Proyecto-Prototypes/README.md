@@ -1,10 +1,10 @@
-## Objetivo del proyecto
+# Objetivo del proyecto
 
 El objetivo de este proyecto es desarrollar un **calculador de seguros** utilizando **prototypes** en JavaScript. La aplicación permitirá a los usuarios seleccionar la marca de su vehículo, el año de fabricación y el tipo de seguro (básico o completo), y con base en esta información, calculará una cotización. Durante el desarrollo, se aprenderá a utilizar prototypes.
 
 > **Nota:** Recuerda, que al usar **prototypes** conseguiremos que las funciones estén asociadas a un objeto específico.
 
-## Desarrollo del proyecto
+# Desarrollo del proyecto
 
 El proyecto se documentará paso a paso, explicando cada parte del código y el uso de prototypes. A medida que se vayan haciendo avances, se podrán consultar en el historial de **commits**.
 
@@ -126,7 +126,7 @@ function calcularSeguro(e) {
 }
 ```
 
-### Octavo paso: Eliminar mensajes después de un tiempo
+## Octavo paso: Eliminar mensajes después de un tiempo
 
 Para mejorar la experiencia del usuario, vamos a eliminar el mensaje de error o éxito después de un breve período de tiempo. Esto se logra utilizando `setTimeout`.
 
@@ -148,7 +148,7 @@ function mostrarMensaje(mensaje, tipo) {
 }
 ```
 
-### Noveno paso: Mejora en la validación del formulario y mostrar mensaje de éxito.
+## Noveno paso: Mejora en la validación del formulario y mostrar mensaje de éxito.
 
 Hemos mejorado la validación del formulario para que, en caso de campos vacíos, se muestre un mensaje de error y se detenga la ejecución de la función. Esta mejora asegura que la función `calcularSeguro` no continúe si hay campos obligatorios vacíos y si el usuario ha rellenado todos los campos correctamente, no se ejecute ese código.
 
@@ -165,6 +165,54 @@ function calcularSeguro(e) {
     ui.mostrarMensaje("Todos los campos son obligatorios", "error");
     return;
   }
-  ui.mostrarMensaje('Calculando...', 'correcto');
+  ui.mostrarMensaje("Calculando...", "correcto");
 }
 ```
+
+Después de validar los datos del formulario, se procede a crear una instancia del objeto **Seguro** dentro de la función `calcularSeguro`, pasándole como argumentos los valores introducidos por el usuario en el formulario:
+
+```javascript
+const seguro = new Seguro(marca, year, tipo);
+console.log(seguro);
+```
+
+Podemos comprobar que se reciben los datos correctamente en forma de objeto haciendo `console.log`.
+
+## Décimo paso: Método para calcular el seguro
+
+Añadimos el método **calcularSeguro** al prototipo de **Seguro**. Este método se encargará de calcular el costo del seguro en base a la marca del vehículo. Vamos a necesitar una variable que almacene la cantidad y asumimos un precio base de 200 (puedes poner el que quieras), a partir de ahí, aplicamos diferentes multiplicadores según la marca seleccionada (puedes cambiarlos si lo deseas):
+
+```javascript
+Seguro.prototype.calcularSeguro = function () {
+  /*
+    1 = Seat 1.20
+    2 = Opel 1.10
+    3 = Citroen 1.05
+    */
+  let cantidad;
+  const PRECIO_BASE = 200;
+  switch (this.marca) {
+    case "1":
+      cantidad = PRECIO_BASE * 1.2;
+      break;
+    case "2":
+      cantidad = PRECIO_BASE * 1.1;
+      break;
+    case "3":
+      cantidad = PRECIO_BASE * 1.05;
+      break;
+    default:
+      break;
+  }
+  console.log(cantidad);
+};
+```
+
+Para que esto funcione, recuerda llamar al prototype una vez instanciada la clase Seguro.
+
+```javascript
+const seguro = new Seguro(marca, year, tipo);
+seguro.calcularSeguro();
+```
+
+En este punto, podemos observar como nos calcula el precio del seguro en función de la marca escogida por el usuario en la consola del navegador.

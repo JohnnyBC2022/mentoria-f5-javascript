@@ -5,6 +5,31 @@ function Seguro(marca, year, tipo) {
     this.tipo = tipo
 }
 
+// Prototype asignado a Seguro que va a realizar el cálculo con los datos
+Seguro.prototype.calcularSeguro = function() {
+    /*
+    1 = Seat 1.20
+    2 = Opel 1.10
+    3 = Citroen 1.05
+    */
+   let cantidad;
+   const PRECIO_BASE = 200;
+   switch (this.marca) {
+    case '1':
+        cantidad = PRECIO_BASE * 1.20;
+        break;
+    case '2':
+        cantidad = PRECIO_BASE * 1.10;
+        break;
+    case '3':
+        cantidad = PRECIO_BASE * 1.05;
+        break;
+    default:
+        break;
+   }
+   console.log(cantidad)
+}
+
 function UI() { }
 
 // Prototype para rellenar de forma dinámica el input año
@@ -73,4 +98,8 @@ function calcularSeguro(e) {
         return;
     }
     ui.mostrarMensaje('Calculando...', 'correcto');
+
+    // Instanciar el seguro
+    const seguro = new Seguro(marca, year, tipo);
+    seguro.calcularSeguro();
 }

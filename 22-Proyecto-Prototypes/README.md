@@ -281,9 +281,22 @@ Para mejorar la experiencia del usuario, vamos a mostrar un spinner de carga dur
 const spinner = document.querySelector("#cargando");
 spinner.style.display = "block";
 setTimeout(() => {
-  spinner.remove();
+  spinner.style.display = "none";
   resultadoDiv.appendChild(div);
 }, 3000);
 ```
 
-Como podemos observar, en el HTML, teníamos el spinner creado, pero lo teníamos con una clase oculta, lo seleccionamos y le cambiamos su clase a ***block*** para que se muestre, a los 3 segundos eliminamos el spinner y mostramos el resultado.
+Como podemos observar, en el HTML, teníamos el spinner creado, pero lo teníamos con una clase oculta, lo seleccionamos y le cambiamos su clase a **_block_** para que se muestre, a los 3 segundos ocultamos el spinner y mostramos el resultado.
+
+## Quinceavo paso: Eliminar resultados previos
+
+Antes de mostrar el nuevo resultado, es importante eliminar cualquier resultado anterior para evitar que se acumulen en la página. Para ello, añadimos el siguiente bloque de código en la función `calcularSeguro`:
+
+```javascript
+const resultados = document.querySelector("#resultado div");
+if (resultados != null) {
+  resultados.remove();
+}
+```
+
+Con este código, verificamos si hay un resultado previo. Si el div existe (es diferente de null), el código procede a eliminarlo usando remove(). Esto garantiza que solo haya un resultado mostrado a la vez, eliminando el anterior antes de mostrar el nuevo.

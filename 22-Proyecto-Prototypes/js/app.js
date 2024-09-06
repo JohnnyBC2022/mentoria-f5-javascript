@@ -103,7 +103,7 @@ UI.prototype.mostrarCuota = (total, seguro) => {
     spinner.style.display = 'block';
 
     setTimeout(() => {
-        spinner.remove(); // Se elimina el spinner y se muestra el resultado
+        spinner.style.display = 'none'; // Se oculta el spinner y se muestra el resultado
         resultadoDiv.appendChild(div);
     }, 3000);
 }
@@ -139,6 +139,12 @@ function calcularSeguro(e) {
         return;
     }
     ui.mostrarMensaje('Calculando...', 'correcto');
+
+    // Eliminar el HTML de los cálculos de las cuotas anteriores
+    const resultados = document.querySelector('#resultado div');
+    if(resultados != null) {
+        resultados.remove()
+    }
 
     // Instanciar el seguro
     const seguro = new Seguro(marca, year, tipo);

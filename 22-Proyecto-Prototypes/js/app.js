@@ -39,7 +39,7 @@ Seguro.prototype.calcularSeguro = function () {
         Si el seguro es a todo riesgo se incrementa en un 40%
     */
 
-    if(this.tipo === 'basico') {
+    if (this.tipo === 'basico') {
         cantidad *= 1.2;
     } else {
         cantidad *= 1.4;
@@ -86,17 +86,37 @@ UI.prototype.mostrarMensaje = (mensaje, tipo) => {
 }
 
 UI.prototype.mostrarCuota = (total, seguro) => {
+    const { marca, year, tipo } = seguro;
+
+    let textoMarca;
+
+    switch (marca) {
+        case '1':
+            textoMarca = 'Seat'
+            break;
+        case '2':
+            textoMarca = 'Opel'
+            break;
+        case '3':
+            textoMarca = 'Citroen'
+            break;
+        default:
+            break;
+    }
     // Generar un div que muestre la cuota
     const div = document.createElement('DIV');
     div.classList.add('mt-10');
 
     div.innerHTML = `
         <p class="header">Tu cuota:</p>
-        <p class="font-bold">Total: ${total}€</p>
+        <p class="font-normal">Marca: <span class="font-bold">${textoMarca}</span></p>
+        <p class="font-normal">Año: <span class="font-bold">${year}</span></p>
+        <p class="font-normal">Tipo de seguro: <span class="font-bold capitalize">${tipo}</span></p>
+        <p class="font-normal">Total: <span class="font-bold text-xl">${total}€</span></p>
     `;
 
     const resultadoDiv = document.querySelector('#resultado');
-    
+
 
     // Mostrar el spinner
     const spinner = document.querySelector('#cargando');
@@ -142,7 +162,7 @@ function calcularSeguro(e) {
 
     // Eliminar el HTML de los cálculos de las cuotas anteriores
     const resultados = document.querySelector('#resultado div');
-    if(resultados != null) {
+    if (resultados != null) {
         resultados.remove()
     }
 

@@ -300,3 +300,52 @@ if (resultados != null) {
 ```
 
 Con este código, verificamos si hay un resultado previo. Si el div existe (es diferente de null), el código procede a eliminarlo usando remove(). Esto garantiza que solo haya un resultado mostrado a la vez, eliminando el anterior antes de mostrar el nuevo.
+
+## Dieciseisavo paso: Mostrar la cuota en el HTML con toda la información.
+
+Para mostrar los detalles de la cuota del seguro calculada en el HTML, modificamos el `div` que habíamos creado previamente y usamos **template literals** para inyectar la información de la marca, año, tipo de seguro (que extraemos del objeto seguro) y el total calculado. El código es el siguiente:
+
+```javascript
+const { marca, year, tipo } = seguro;
+div.innerHTML = `
+    <p class="header">Tu cuota:</p>
+    <p class="font-normal">Marca: <span class="font-bold">${marca}</span></p>
+    <p class="font-normal">Año: <span class="font-bold">${year}</span></p>
+    <p class="font-normal">Tipo de seguro: <span class="font-bold capitalize">${tipo}</span></p>
+    <p class="font-normal">Total: <span class="font-bold text-xl">${total}€</span></p>
+`;
+```
+
+## Diecisieteavo paso: Asignar el nombre de la marca según el valor seleccionado
+
+Para finalizar, puedes observar que en la información de la marca nos muestra en el HTML el valor del input como un "1", "2" o "3" en función de la opción escogida, para mostrar el nombre legible de la marca en la interfaz, utilizamos un bloque `switch` para traducir el valor del `select` de la marca a su nombre correspondiente. El código es el siguiente:
+
+```javascript
+let textoMarca;
+switch (marca) {
+  case "1":
+    textoMarca = "Seat";
+    break;
+  case "2":
+    textoMarca = "Opel";
+    break;
+  case "3":
+    textoMarca = "Citroen";
+    break;
+  default:
+    textoMarca = "Marca desconocida";
+    break;
+}
+```
+
+y modificamos el HTML inyectado en el código con la variable que nos indica el texto de la marca:
+
+```javascript
+div.innerHTML = `
+        ...
+        <p class="font-normal">Marca: <span class="font-bold">${textoMarca}</span></p>
+        ....
+        `;
+```
+
+Con todo esto ya tenemos el proyecto finalizado. Puedes añadir más marcas, un nuevo tipo de cobertura o un nuevo cálculo de la cuota en función de tipos de pago, si lo paga en efectivo, con tarjeta, si se fracciona o incluso añadir bonificaciones en función de la antigüedad si se renueva el seguro.

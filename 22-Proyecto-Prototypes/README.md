@@ -227,3 +227,20 @@ cantidad -= (antiguedad * 3 * cantidad) / 100;
 // recuerda que es como poner:
 // cantidad = cantidad - ((antiguedad * 3) * cantidad) / 100
 ```
+
+## Duodécimo paso: Ajuste del precio según el tipo de cobertura
+
+El precio del seguro también varía según el tipo de cobertura que seleccione el usuario: **básico** o **todo-riesgo**. A continuación, se realiza el ajuste del precio final de acuerdo a la elección del usuario y retornamos la cantidad que es el valor que necesitaremos para mostrar al usuario la cuota de su seguro por pantalla.
+
+Para que sea un poco más realista aplicaremos lo siguiente:
+**Cobertura básica**: Si el usuario selecciona la cobertura básica, el precio se multiplica por 1.2.
+**Cobertura a todo riesgo**: Si el usuario selecciona la cobertura a todo riesgo, el precio se multiplica por 1.4.
+
+```javascript
+if (this.tipo === "basico") {
+  cantidad *= 1.2;
+} else {
+  cantidad *= 1.4;
+}
+return cantidad;
+```

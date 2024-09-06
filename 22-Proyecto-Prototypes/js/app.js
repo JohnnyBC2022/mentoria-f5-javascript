@@ -33,7 +33,18 @@ Seguro.prototype.calcularSeguro = function () {
 
     // Cada año de antigüedad, la cuota se va a reducir un 3%
     cantidad -= ((antiguedad * 3) * cantidad) / 100;
-    console.log(cantidad)
+
+    /*
+        Si el seguro es básico, se incrementa en un 20%
+        Si el seguro es a todo riesgo se incrementa en un 40%
+    */
+
+    if(this.tipo === 'basico') {
+        cantidad *= 1.2;
+    } else {
+        cantidad *= 1.4;
+    }
+    return cantidad;
 }
 
 function UI() { }
